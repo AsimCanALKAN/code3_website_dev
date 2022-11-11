@@ -1,7 +1,27 @@
 <div class="card">
     <div class="card-header">
-        <h4 class="card-title">Filter Settings</h4>
+        <div class="col-sm-5">
+            <h4 class="card-title">Filter Settings</h4>
+        </div>
+        <div class="col-sm-2">
+            <div class="col-auto my-1" id="filterButtonLoadingDIV" style="visibility: hidden;">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <div class="d-flex flex-wrap align-items-center">
+
+                <div class="col-md-2 offset-md-9 me-auto">
+                    <div class="row align-items-center">
+                        <button onclick="filterButtonClicked()" class="btn btn-primary" id="filterButton">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
     <div class="card-body">
         <div class="d-flex flex-wrap align-items-center mb-3">
             <div class="col-xl-12">

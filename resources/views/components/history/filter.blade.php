@@ -15,7 +15,7 @@
 
                 <div class="col-md-2 offset-md-9 me-auto">
                     <div class="row align-items-center">
-                        <button onclick="filterButtonClicked()" class="btn btn-primary" id="filterButton">Filter</button>
+                        <button onclick="filterButtonClicked()" class="btn btn-primary" id="filterButton">Apply</button>
                     </div>
                 </div>
             </div>
