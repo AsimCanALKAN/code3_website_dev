@@ -73,8 +73,8 @@
 <script src="{{ asset('js/dlabnav-init.js')}}"></script>
 
 <!-- We can uncomment to enable style options -->
-{{-- <script src="{{ asset('js/demo.js')}}"></script>
-<script src="{{ asset('js/styleSwitcher.js')}}"></script> --}}
+<script src="{{ asset('js/demo.js')}}"></script>
+<script src="{{ asset('js/styleSwitcher.js')}}"></script>
 
 <script src="{{ asset('vendor/owl-carousel/owl.carousel.js')}}"></script>
 <script src="{{ asset('js/dashboard/cards-center.js')}}"></script>

@@ -1,271 +1,280 @@
-<div class="card">
-    <div class="card-header">
-        <div class="col-sm-5">
-            <h4 class="card-title">Filter Settings</h4>
-        </div>
-        <div class="col-sm-2">
-            <div class="col-auto my-1" id="filterButtonLoadingDIV" style="visibility: hidden;">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="sr-only">Loading...</span>
+<div id="accordion">
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <div class="col-sm-5">
+                <h4 class="card-title">Filter Settings
+                    <a class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#collapseOne" class="accordion-header collapsed">
+                        Show/Hide Filters
+                    </a>
+                </h4>
+
+                </button>
+            </div>
+            <div class="col-sm-2">
+                <div class="col-auto my-1" id="filterButtonLoadingDIV" style="visibility: hidden;">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-5">
-            <div class="d-flex flex-wrap align-items-center">
+            <div class="col-sm-5">
+                <div class="d-flex flex-wrap align-items-center">
 
-                <div class="col-md-2 offset-md-9 me-auto">
-                    <div class="row align-items-center">
-                        <button onclick="filterButtonClicked()" class="btn btn-primary" id="filterButton">Apply</button>
+                    <div class="col-md-2 offset-md-9 me-auto">
+                        <div class="row align-items-center">
+                            <button onclick="filterButtonClicked()" class="btn btn-primary" id="filterButton">Apply</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        <div id="collapseOne" class="collapse accordion_body" data-bs-parent="#example6">
+            <div class="card-body">
+                <div class="d-flex flex-wrap align-items-center mb-3">
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Select Filter Type</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="nav flex-column nav-pills mb-3">
+                                            <a href="#v-pills-broker" data-bs-toggle="pill" class="nav-link active" id="v-pills-broker-tab">Broker</a>
+                                            <a href="#v-pills-symbol" data-bs-toggle="pill" class="nav-link" id="v-pills-symbol-tab">Symbol</a>
+                                            <a href="#v-pills-account" data-bs-toggle="pill" class="nav-link" id="v-pills-account-tab">Account</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="tab-content">
+                                            <div id="v-pills-broker" class="tab-pane fade active show">
+                                                <div class="d-flex flex-wrap align-items-center mb-3">
+                                                    <form>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-auto my-1" id="broker_BrokersFilterLoadingDIV" style="visibility: hidden;">
+                                                                <div class="spinner-border text-primary" role="status">
+                                                                    <span class="sr-only">Loading...</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-auto my-1" id="brokersFilterDIV" style="display:inline-block;max-width:180px;">
+                                                                <label class="me-sm-2">Brokers</label>
+                                                                <select onchange="getBrokersFilter(this, 'BrokersFilterLoadingDIV', 'broker_')" class="me-sm-4 form-control wide" id="broker_BrokersFilter" style="width:100%">
+                                                                    <option value="Select.." selected>Select..</option>
+                                                                    @foreach ($data->brokers->brokers as $breakout)
+                                                                    <option value={{$breakout->id}}>{{$breakout->name}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                    <form>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-auto my-1" id="broker_SymbolsFilterLoadingDIV" style="visibility: hidden;">
+                                                                <div class="spinner-border text-primary" role="status">
+                                                                    <span class="sr-only">Loading...</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-auto my-1" id="symbolFilterDIV" style="display:inline-block;max-width:180px;">
+                                                                <label class="me-sm-2">Symbols</label>
+                                                                <select onchange="getPairsFilter(this, 'SymbolsFilterLoadingDIV', 'broker_')" class="me-sm-4 form-control wide" id="broker_SymbolsFilter" style="width:100%" disabled>
+                                                                    <option value="Select.." selected>Select..</option>
+                                                                    @foreach ($data->pairs->pairs as $breakout)
+                                                                    <option value="{{$breakout->id}}_{{$breakout->broker_id}}">{{$breakout->symbol}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                    <form>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-auto my-1" id="broker_AccountsFilterLoadingDIV" style="visibility: hidden;">
+                                                                <div class="spinner-border text-primary" role="status">
+                                                                    <span class="sr-only">Loading...</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-auto my-1" id="accountsFilterDIV" style="display:inline-block;max-width:180px;">
+                                                                <label class="me-sm-2">Account ID</label>
+                                                                <select onchange="getAccountsFilter(this, 'AccountsFilterLoadingDIV', 'broker_')" class="me-sm-4 form-control wide" id="broker_AccountsFilter" style="width:100%" disabled>
+                                                                    <option value="Select.." selected>Select..</option>
+                                                                    @foreach ($data->accounts->accounts as $breakout)
+                                                                    <option value="{{$breakout->id}}_{{$breakout->broker_id}}"> {{$breakout->login}} ({{ $breakout->owner}}) </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div id="v-pills-symbol" class="tab-pane fade">
+                                                <div class="d-flex flex-wrap align-items-center mb-3">
+                                                    <form>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-auto my-1" id="symbol_SymbolsFilterLoadingDIV" style="visibility: hidden;">
+                                                                <div class="spinner-border text-primary" role="status">
+                                                                    <span class="sr-only">Loading...</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-auto my-1" id="symbolFilterDIV" style="display:inline-block;max-width:180px;">
+                                                                <label class="me-sm-2">Symbols</label>
+                                                                <select onchange="getPairsFilter(this, 'SymbolsFilterLoadingDIV', 'symbol_')" class="me-sm-2 form-control wide" id="symbol_SymbolsFilter" style="width:100%">
+                                                                    <option value="Select.." selected>Select..</option>
+                                                                    @foreach ($data->pairs->pairs as $breakout)
+                                                                    <option value="{{$breakout->id}}_{{$breakout->broker_id}}">{{$breakout->symbol}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                    <form>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-auto my-1" id="symbol_BrokersFilterLoadingDIV" style="visibility: hidden;">
+                                                                <div class="spinner-border text-primary" role="status">
+                                                                    <span class="sr-only">Loading...</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-auto my-1" id="brokersFilterDIV" style="display:inline-block;max-width:180px;">
+                                                                <label class="me-sm-2">Brokers</label>
+                                                                <select onchange="getBrokersFilter(this, 'BrokersFilterLoadingDIV', 'symbol_')" class="me-sm-2 form-control wide" id="symbol_BrokersFilter" style="width:100%" disabled>
+                                                                    <option value="Select.." selected>Select..</option>
+                                                                    @foreach ($data->brokers->brokers as $breakout)
+                                                                    <option value={{$breakout->id}}>{{$breakout->name}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                    <form>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-auto my-1" id="symbol_AccountsFilterLoadingDIV" style="visibility: hidden;">
+                                                                <div class="spinner-border text-primary" role="status">
+                                                                    <span class="sr-only">Loading...</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-auto my-1" id="accountsFilterDIV" style="display:inline-block;max-width:180px;">
+                                                                <label class="me-sm-2">Account ID</label>
+                                                                <select onchange="getAccountsFilter(this, 'AccountsFilterLoadingDIV', 'symbol_')" class="me-sm-2 form-control wide" id="symbol_AccountsFilter" style="width:100%" disabled>
+                                                                    <option value="Select.." selected>Select..</option>
+                                                                    @foreach ($data->accounts->accounts as $breakout)
+                                                                    <option value="{{$breakout->id}}_{{$breakout->broker_id}}"> {{$breakout->login}} ({{ $breakout->owner}}) </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div id="v-pills-account" class="tab-pane fade">
+                                                <div class="d-flex flex-wrap align-items-center mb-3">
+                                                    <form>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-auto my-1" id="account_AccountsFilterLoadingDIV" style="visibility: hidden;">
+                                                                <div class="spinner-border text-primary" role="status">
+                                                                    <span class="sr-only">Loading...</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-auto my-1" id="accountsFilterDIV" style="display:inline-block;max-width:180px;">
+                                                                <label class="me-sm-2">Account ID</label>
+                                                                <select onchange="getAccountsFilter(this, 'AccountsFilterLoadingDIV', 'account_')" class="me-sm-2 form-control wide" id="account_AccountsFilter" style="width:100%">
+                                                                    <option value="Select.." selected>Select..</option>
+                                                                    @foreach ($data->accounts->accounts as $breakout)
+                                                                    <option value="{{$breakout->id}}_{{$breakout->broker_id}}"> {{$breakout->login}} ({{ $breakout->owner}}) </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                    <form>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-auto my-1" id="account_SymbolsFilterLoadingDIV" style="visibility: hidden;">
+                                                                <div class="spinner-border text-primary" role="status">
+                                                                    <span class="sr-only">Loading...</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-auto my-1" id="symbolFilterDIV" style="display:inline-block;max-width:180px;">
+                                                                <label class="me-sm-2">Symbols</label>
+                                                                <select onchange="getPairsFilter(this, 'SymbolsFilterLoadingDIV', 'account_')" class="me-sm-2 form-control wide" id="account_SymbolsFilter" style="width:100%" disabled>
+                                                                    <option value="Select.." selected>Select..</option>
+                                                                    @foreach ($data->pairs->pairs as $breakout)
+                                                                    <option value="{{$breakout->id}}_{{$breakout->broker_id}}">{{$breakout->symbol}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                    <form>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-auto my-1" id="account_BrokersFilterLoadingDIV" style="visibility: hidden;">
+                                                                <div class="spinner-border text-primary" role="status">
+                                                                    <span class="sr-only">Loading...</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-auto my-1" id="brokersFilterDIV" style="display:inline-block;max-width:180px;">
+                                                                <label class="me-sm-2">Brokers</label>
+                                                                <select onchange="getBrokersFilter(this, 'BrokersFilterLoadingDIV', 'account_')" class="me-sm-2 form-control wide" id="account_BrokersFilter" style="width:100%" disabled>
+                                                                    <option value="Select.." selected>Select..</option>
+                                                                    @foreach ($data->brokers->brokers as $breakout)
+                                                                    <option value={{$breakout->id}}>{{$breakout->name}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    <div class="card-body">
-        <div class="d-flex flex-wrap align-items-center mb-3">
-            <div class="col-xl-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Select Filter Type</h4>
+                        <h4 class="card-title">Select Specific Range</h4>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="nav flex-column nav-pills mb-3">
-                                    <a href="#v-pills-broker" data-bs-toggle="pill" class="nav-link active" id="v-pills-broker-tab">Broker</a>
-                                    <a href="#v-pills-symbol" data-bs-toggle="pill" class="nav-link" id="v-pills-symbol-tab">Symbol</a>
-                                    <a href="#v-pills-account" data-bs-toggle="pill" class="nav-link" id="v-pills-account-tab">Account</a>
+                        <div class="col-xl-12">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p class="mb-1">Select Profit Range</p>
+                                    <div id="profitRange"></div>
+                                    <div class="input-group">
+                                        <input class="form-control" data-toggle="tooltip" data-placement="top" title="Min Profit" type="number" min="-100000000" max="100000000" step="1" id="profit-number1">
+                                        <input class="form-control" data-toggle="tooltip" data-placement="auto" title="Max Profit" type="number" min="-100000000" max="100000000" step="1" id="profit-number2">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-8">
-                                <div class="tab-content">
-                                    <div id="v-pills-broker" class="tab-pane fade active show">
-                                        <div class="d-flex flex-wrap align-items-center mb-3">
-                                            <form>
-                                                <div class="row align-items-center">
-                                                    <div class="col-auto my-1" id="broker_BrokersFilterLoadingDIV" style="visibility: hidden;">
-                                                        <div class="spinner-border text-primary" role="status">
-                                                            <span class="sr-only">Loading...</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-auto my-1" id="brokersFilterDIV" style="display:inline-block;max-width:180px;">
-                                                        <label class="me-sm-2">Brokers</label>
-                                                        <select onchange="getBrokersFilter(this, 'BrokersFilterLoadingDIV', 'broker_')" class="me-sm-4 form-control wide" id="broker_BrokersFilter" style="width:100%">
-                                                            <option value="Select.." selected>Select..</option>
-                                                            @foreach ($data->brokers->brokers as $breakout)
-                                                            <option value={{$breakout->id}}>{{$breakout->name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                            <form>
-                                                <div class="row align-items-center">
-                                                    <div class="col-auto my-1" id="broker_SymbolsFilterLoadingDIV" style="visibility: hidden;">
-                                                        <div class="spinner-border text-primary" role="status">
-                                                            <span class="sr-only">Loading...</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-auto my-1" id="symbolFilterDIV" style="display:inline-block;max-width:180px;">
-                                                        <label class="me-sm-2">Symbols</label>
-                                                        <select onchange="getPairsFilter(this, 'SymbolsFilterLoadingDIV', 'broker_')" class="me-sm-4 form-control wide" id="broker_SymbolsFilter" style="width:100%" disabled>
-                                                            <option value="Select.." selected>Select..</option>
-                                                            @foreach ($data->pairs->pairs as $breakout)
-                                                            <option value="{{$breakout->id}}_{{$breakout->broker_id}}">{{$breakout->symbol}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                            <form>
-                                                <div class="row align-items-center">
-                                                    <div class="col-auto my-1" id="broker_AccountsFilterLoadingDIV" style="visibility: hidden;">
-                                                        <div class="spinner-border text-primary" role="status">
-                                                            <span class="sr-only">Loading...</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-auto my-1" id="accountsFilterDIV" style="display:inline-block;max-width:180px;">
-                                                        <label class="me-sm-2">Account ID</label>
-                                                        <select onchange="getAccountsFilter(this, 'AccountsFilterLoadingDIV', 'broker_')" class="me-sm-4 form-control wide" id="broker_AccountsFilter" style="width:100%" disabled>
-                                                            <option value="Select.." selected>Select..</option>
-                                                            @foreach ($data->accounts->accounts as $breakout)
-                                                            <option value="{{$breakout->id}}_{{$breakout->broker_id}}"> {{$breakout->login}} ({{ $breakout->owner}}) </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div id="v-pills-symbol" class="tab-pane fade">
-                                        <div class="d-flex flex-wrap align-items-center mb-3">
-                                            <form>
-                                                <div class="row align-items-center">
-                                                    <div class="col-auto my-1" id="symbol_SymbolsFilterLoadingDIV" style="visibility: hidden;">
-                                                        <div class="spinner-border text-primary" role="status">
-                                                            <span class="sr-only">Loading...</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-auto my-1" id="symbolFilterDIV" style="display:inline-block;max-width:180px;">
-                                                        <label class="me-sm-2">Symbols</label>
-                                                        <select onchange="getPairsFilter(this, 'SymbolsFilterLoadingDIV', 'symbol_')" class="me-sm-2 form-control wide" id="symbol_SymbolsFilter" style="width:100%">
-                                                            <option value="Select.." selected>Select..</option>
-                                                            @foreach ($data->pairs->pairs as $breakout)
-                                                            <option value="{{$breakout->id}}_{{$breakout->broker_id}}">{{$breakout->symbol}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                            <form>
-                                                <div class="row align-items-center">
-                                                    <div class="col-auto my-1" id="symbol_BrokersFilterLoadingDIV" style="visibility: hidden;">
-                                                        <div class="spinner-border text-primary" role="status">
-                                                            <span class="sr-only">Loading...</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-auto my-1" id="brokersFilterDIV" style="display:inline-block;max-width:180px;">
-                                                        <label class="me-sm-2">Brokers</label>
-                                                        <select onchange="getBrokersFilter(this, 'BrokersFilterLoadingDIV', 'symbol_')" class="me-sm-2 form-control wide" id="symbol_BrokersFilter" style="width:100%" disabled>
-                                                            <option value="Select.." selected>Select..</option>
-                                                            @foreach ($data->brokers->brokers as $breakout)
-                                                            <option value={{$breakout->id}}>{{$breakout->name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                            <form>
-                                                <div class="row align-items-center">
-                                                    <div class="col-auto my-1" id="symbol_AccountsFilterLoadingDIV" style="visibility: hidden;">
-                                                        <div class="spinner-border text-primary" role="status">
-                                                            <span class="sr-only">Loading...</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-auto my-1" id="accountsFilterDIV" style="display:inline-block;max-width:180px;">
-                                                        <label class="me-sm-2">Account ID</label>
-                                                        <select onchange="getAccountsFilter(this, 'AccountsFilterLoadingDIV', 'symbol_')" class="me-sm-2 form-control wide" id="symbol_AccountsFilter" style="width:100%" disabled>
-                                                            <option value="Select.." selected>Select..</option>
-                                                            @foreach ($data->accounts->accounts as $breakout)
-                                                            <option value="{{$breakout->id}}_{{$breakout->broker_id}}"> {{$breakout->login}} ({{ $breakout->owner}}) </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div id="v-pills-account" class="tab-pane fade">
-                                        <div class="d-flex flex-wrap align-items-center mb-3">
-                                            <form>
-                                                <div class="row align-items-center">
-                                                    <div class="col-auto my-1" id="account_AccountsFilterLoadingDIV" style="visibility: hidden;">
-                                                        <div class="spinner-border text-primary" role="status">
-                                                            <span class="sr-only">Loading...</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-auto my-1" id="accountsFilterDIV" style="display:inline-block;max-width:180px;">
-                                                        <label class="me-sm-2">Account ID</label>
-                                                        <select onchange="getAccountsFilter(this, 'AccountsFilterLoadingDIV', 'account_')" class="me-sm-2 form-control wide" id="account_AccountsFilter" style="width:100%">
-                                                            <option value="Select.." selected>Select..</option>
-                                                            @foreach ($data->accounts->accounts as $breakout)
-                                                            <option value="{{$breakout->id}}_{{$breakout->broker_id}}"> {{$breakout->login}} ({{ $breakout->owner}}) </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                            <form>
-                                                <div class="row align-items-center">
-                                                    <div class="col-auto my-1" id="account_SymbolsFilterLoadingDIV" style="visibility: hidden;">
-                                                        <div class="spinner-border text-primary" role="status">
-                                                            <span class="sr-only">Loading...</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-auto my-1" id="symbolFilterDIV" style="display:inline-block;max-width:180px;">
-                                                        <label class="me-sm-2">Symbols</label>
-                                                        <select onchange="getPairsFilter(this, 'SymbolsFilterLoadingDIV', 'account_')" class="me-sm-2 form-control wide" id="account_SymbolsFilter" style="width:100%" disabled>
-                                                            <option value="Select.." selected>Select..</option>
-                                                            @foreach ($data->pairs->pairs as $breakout)
-                                                            <option value="{{$breakout->id}}_{{$breakout->broker_id}}">{{$breakout->symbol}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                            <form>
-                                                <div class="row align-items-center">
-                                                    <div class="col-auto my-1" id="account_BrokersFilterLoadingDIV" style="visibility: hidden;">
-                                                        <div class="spinner-border text-primary" role="status">
-                                                            <span class="sr-only">Loading...</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-auto my-1" id="brokersFilterDIV" style="display:inline-block;max-width:180px;">
-                                                        <label class="me-sm-2">Brokers</label>
-                                                        <select onchange="getBrokersFilter(this, 'BrokersFilterLoadingDIV', 'account_')" class="me-sm-2 form-control wide" id="account_BrokersFilter" style="width:100%" disabled>
-                                                            <option value="Select.." selected>Select..</option>
-                                                            @foreach ($data->brokers->brokers as $breakout)
-                                                            <option value={{$breakout->id}}>{{$breakout->name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
+                                <div class="col-sm-6">
+                                    <p class="mb-1">Select Step Range</p>
+                                    <div id="step-slider"></div>
+                                    <div class="input-group">
+                                        <input class="form-control" data-toggle="tooltip" data-placement="top" title="Min Step" type="number" min="-100000000" max="100000000" step="1" id="step-number1">
+                                        <input class="form-control" data-toggle="tooltip" data-placement="auto" title="Max Step" type="number" min="-100000000" max="100000000" step="1" id="step-number2">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Select Specific Range</h4>
-            </div>
-            <div class="card-body">
-                <div class="col-xl-12">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <p class="mb-1">Select Profit Range</p>
-                            <div id="profitRange"></div>
-                            <div class="input-group">
-                                <input class="form-control" data-toggle="tooltip" data-placement="top" title="Min Profit" type="number" min="-100000000" max="100000000" step="1" id="profit-number1">
-                                <input class="form-control" data-toggle="tooltip" data-placement="auto" title="Max Profit" type="number" min="-100000000" max="100000000" step="1" id="profit-number2">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <p class="mb-1">Select Step Range</p>
-                            <div id="step-slider"></div>
-                            <div class="input-group">
-                                <input class="form-control" data-toggle="tooltip" data-placement="top" title="Min Step" type="number" min="-100000000" max="100000000" step="1" id="step-number1">
-                                <input class="form-control" data-toggle="tooltip" data-placement="auto" title="Max Step" type="number" min="-100000000" max="100000000" step="1" id="step-number2">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-12 mt-3">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <p class="mb-1">Select Date Range</p>
-                            <input id="datetime_range" class="form-control input-daterange-datepicker" type="text" name="daterange">
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="input-group clockpicker">
-                                <p class="mb-1">Select Start Time</p>
-                                <div class="input-group">
-                                    <input id="start_time" type="text" class="form-control" value="00:05">
+                        <div class="col-xl-12 mt-3">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p class="mb-1">Select Date Range</p>
+                                    <input id="datetime_range" class="form-control input-daterange-datepicker" type="text" name="daterange">
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="input-group clockpicker">
-                                <p class="mb-1">Select End Time</p>
-                                <div class="input-group">
-                                    <input id="end_time" type="text" class="form-control" value="23:55">
+                                <div class="col-sm-3">
+                                    <div class="input-group clockpicker">
+                                        <p class="mb-1">Select Start Time</p>
+                                        <div class="input-group">
+                                            <input id="start_time" type="text" class="form-control" value="00:05">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="input-group clockpicker">
+                                        <p class="mb-1">Select End Time</p>
+                                        <div class="input-group">
+                                            <input id="end_time" type="text" class="form-control" value="23:55">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

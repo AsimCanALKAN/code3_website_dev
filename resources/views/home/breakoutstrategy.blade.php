@@ -1,6 +1,6 @@
 <x-app-layout :pagetitle="$pagetitle">
-    <x-breakout.filter :data="$data"/>
-    <x-breakout.results :data="$data"/>
+    <x-breakout.filter :data="$data" />
+    <x-breakout.results :data="$data" />
 
     <x-slot:scripts>
         <script src="{{ asset('vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
@@ -13,7 +13,7 @@
         <script src="{{ asset('vendor/apexchart/apexchart.js') }}"></script>
         <!-- clockpicker -->
         <script src="{{ asset('vendor/clockpicker/js/bootstrap-clockpicker.min.js') }}"></script>
-        
+
         <!-- momment js is must -->
         <script src="{{ asset('vendor/moment/moment.min.js') }}"></script>
         <script src="{{ asset('vendor/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
@@ -26,7 +26,42 @@
         <!-- momment js is must -->
         <script src="{{ asset('vendor/moment/moment.min.js') }}"></script>
         <script src="{{ asset('vendor/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+        <!-- Datatable -->
+        <script src="{{ asset('vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ asset('js/plugins-init/datatables.init.js') }}"></script>
+        <script>
+            $(document).ready(() => {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                var requestData = {
+                    page: "{{ request()->query('page') }}",
+                }
+                const a = $.ajax({
+                    url: "{{ route('api.history.get') }}?page=" + requestData.page,
+                    method: 'get',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    success: (d) => {
+                        const button_wrapper = $('#button-wrapper');
 
+                        for (const link of d.links) {
+                            // TODO: duplicate code
+                            if (link.url === null) {
+                                button_wrapper.append(`<a href="#" class="btn btn-primary" id="pagination-button-${link.label}">${link.label}</a>`)
+                            } else {
+                                if (link.active) {
+                                    button_wrapper.append(`<a href="{{ route('history-analysis') }}?${link.url.split('?')[1]}" class="btn btn-primary active" id="pagination-button-${link.label}">${link.label}</a>`)
+                                } else button_wrapper.append(`<a href="{{ route('history-analysis') }}?${link.url.split('?')[1]}" class="btn btn-primary" id="pagination-button-${link.label}">${link.label}</a>`)
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
 
         <script src="{{ asset('vendor/nouislider/nouislider.min.js') }}"></script>
         <script>
@@ -34,11 +69,11 @@
                 "use strict"
                 var profitSlider = document.getElementById('profitRange')
                 noUiSlider.create(document.getElementById('profitRange'), {
-                    start: [10, 30],
+                    start: [-30, 30],
                     connect: true,
                     range: {
-                        'min': 20,
-                        'max': 100
+                        'min': -999999,
+                        'max': 999999
                     }
                 })
 
@@ -71,7 +106,7 @@
                     connect: true,
                     range: {
                         'min': 1,
-                        'max': 6
+                        'max': 100
                     }
                 });
 

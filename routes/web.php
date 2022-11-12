@@ -58,7 +58,7 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
     Route::get('/history/services/get', [HistoryAnalysisController::class, 'getFromAPI'])
     ->name('api.history.services');
 
-    Route::get('/breakout/services/get', [HistoryAnalysisController::class, 'getFromAPI'])
+    Route::get('/breakout/services/get', [BreakoutController::class, 'getFromAPI'])
     ->name('api.breakout.services');
     
 });

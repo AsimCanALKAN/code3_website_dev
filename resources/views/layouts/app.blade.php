@@ -11,6 +11,7 @@
                 </div>
             </div>
         </div>
+        
     
         <!-- HEADER -->
         <x-header :pagetitle="$pagetitle" />

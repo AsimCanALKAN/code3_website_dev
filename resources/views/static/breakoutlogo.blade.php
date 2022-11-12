@@ -9,9 +9,9 @@
 </svg>
 
 <svg class="brand-title" width="140" height="64px" viewBox="0 16 150 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-family="Cairo" font-size="36" font-weight="normal" line-spacing="15">
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-family="Cairo" font-size="26" font-weight="normal" line-spacing="15">
         <text id="BOS" fill="#5BCFC5">
-            <tspan x="-2" y="45">BreakOut</tspan>
+            <tspan x="10" y="43">Code3 Panel</tspan>
         </text>
     </g>
 </svg>
