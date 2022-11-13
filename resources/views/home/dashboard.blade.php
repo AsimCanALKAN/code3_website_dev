@@ -1,4 +1,5 @@
-<x-app-layout :pagetitle="$pagetitle">
+<x-app-layout :pagetitle="$pagetitle" :user="auth()->user()">
+
     <x-widgets.home-cards />
 
     <div class="row">

@@ -1,4 +1,5 @@
-<x-app-layout :pagetitle="$pagetitle">
+<x-app-layout :pagetitle="$pagetitle" :user="auth()->user()">
+
     <div class="row">
         <div class="col-xl-12">
             <div class="card">

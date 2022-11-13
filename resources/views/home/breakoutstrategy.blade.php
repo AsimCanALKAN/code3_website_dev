@@ -1,4 +1,4 @@
-<x-app-layout :pagetitle="$pagetitle">
+<x-app-layout :pagetitle="$pagetitle" :user="auth()->user()">
     <x-breakout.filter :data="$data" />
     <x-breakout.results :data="$data" />
 

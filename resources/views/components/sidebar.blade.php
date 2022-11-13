@@ -22,16 +22,16 @@
                         @csrf
                         <a class="dropdown-item ai-icon" href="#!" onclick="event.preventDefault();this.closest('form').submit();">
                             <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                        <span class="ms-2">Logout </span>
+                            <span class="ms-2">Logout </span>
                         </a>
                     </form>
                     {{-- <a href="{{ route('logout') }}" class="dropdown-item ai-icon">
-                        <svg id="icon-logout" xmlns="http://www.w3.org/2000/svg" class="text-danger" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                            <polyline points="16 17 21 12 16 7"></polyline>
-                            <line x1="21" y1="12" x2="9" y2="12"></line>
-                        </svg>
-                        
+                    <svg id="icon-logout" xmlns="http://www.w3.org/2000/svg" class="text-danger" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+
                     </a> --}}
                 </div>
             </li>
@@ -41,22 +41,34 @@
                     <span class="nav-text">Dashboard</span>
                 </a>
             </li>
-            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+            <li>
+                <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                     <i class="bi-signpost-2-fill"></i>
                     <span class="nav-text">Swing BB</span>
                 </a>
-                <ul aria-expanded="false">
+                <ul id="swing_strategy" aria-expanded="false">
                     <li><a href="{{ route('breakout-strategy') }}"><i class="las la-heartbeat scale5 me-3"></i> Live Trade</a></li>
                     <li><a href="{{ route('history-analysis') }}"><i class="las la-history scale5 me-3"></i> Historical Analysis</a></li>
-                    <li><a href="{{ route('symbol-settings') }}"><i class="las la-cogs scale5 me-3"></i> Symbol Settings</a></li>
+                    <!-- <li><a href="{{ route('symbol-settings') }}"><i class="las la-cogs scale5 me-3"></i> Symbol Settings</a></li> -->
+                </ul>
 
+            </li>
+            <li>
+                <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                    <i class="bi-signpost-2-fill"></i>
+                    <span class="nav-text">BreakOut Strategy</span>
+                </a>
+                <ul id="breakout_strategy" aria-expanded="false">
+                    <li><a href="{{ route('bos-breakout-strategy') }}"><i class="las la-heartbeat scale5 me-3"></i> Live Trade</a></li>
+                    <li><a href="{{ route('bos-history-analysis') }}"><i class="las la-history scale5 me-3"></i> Historical Analysis</a></li>
+                    <li><a href="{{ route('symbol-settings') }}"><i class="las la-cogs scale5 me-3"></i> Symbol Settings</a></li>
                 </ul>
 
             </li>
         </ul>
         <div class="copyright">
-            <p><strong>BreakOut Strategy Admin Dashboard</strong> © 2022 All Rights Reserved</p>
-            <p class="fs-12">Made with by BreakOut Strategy Team</p>
+            <p><strong>Code3 Admin Dashboard</strong> © 2022 All Rights Reserved</p>
+            <p class="fs-12">Made with by Code3 Team</p>
         </div>
     </div>
 </div>

@@ -1,8 +1,9 @@
-<x-app-layout :pagetitle="$pagetitle">
+<x-app-layout :pagetitle="$pagetitle" :user="auth()->user()">
+
     <div class="row">
         <div class="col-xl-12">
             @if (isset($error))
-                {{ $error }}
+            {{ $error }}
             @endif
             <div class="card">
                 <div class="card-body">
@@ -37,6 +38,8 @@
                                                                     <th>Password</th>
                                                                     <th>Role</th>
                                                                     <th>Joined</th>
+                                                                    @can('edit_profile_page')
+
                                                                     <th>
                                                                         <a data-bs-toggle="modal" data-bs-target="#modalInputs" href="javascript:void(0);" class="btn btn-primary d-sm-inline-block d-none">Add New<i class="las la-plus ms-3 scale5"></i></a>
                                                                         <!-- Modal -->
@@ -45,36 +48,38 @@
                                                                                 <form>
                                                                                     <div class="modal-content">
                                                                                         <div class="modal-header">
-                                                                                            <h5 class="modal-title">BreakOut Strategy Inputs</h5>
+                                                                                            <h5 class="modal-title">Create new account</h5>
                                                                                         </div>
                                                                                         <div class="modal-body">
                                                                                             <h5>Inputs</h5>
                                                                                             <div class="basic-form">
-                                                                                                <form action="{{ route('api.broker.add') }}" method="POST">
+                                                                                                <form>
                                                                                                     @csrf
                                                                                                     <div class="mb-3">
-                                                                                                        <div class="input-group">
-                                                                                                            <span class="input-group-text">First and last name</span>
-                                                                                                            <input type="text" class="form-control" placeholder="First name">
-                                                                                                            <input type="text" class="form-control" placeholder="Last name">
-                                                                                                        </div>
+                                                                                                        <label class="form-label">Name</label>
+                                                                                                        <input type="text" name="name" id="name" class="form-control" placeholder="Name" required>
                                                                                                     </div>
                                                                                                     <div class="mb-3">
                                                                                                         <label class="form-label">Email</label>
-                                                                                                        <input type="email" class="form-control" placeholder="Email">
+                                                                                                        <input type="email" name="email" id="email" class="form-control" placeholder="Email" required>
                                                                                                     </div>
                                                                                                     <div class="mb-3">
                                                                                                         <label class="form-label">Password</label>
-                                                                                                        <input type="password" class="form-control" placeholder="Password">
+                                                                                                        <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+                                                                                                    </div>
+
+                                                                                                    <div class="mb-3">
+                                                                                                        <label class="form-label">Password Confirmation</label>
+                                                                                                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="Password Confirmation" required>
                                                                                                     </div>
 
                                                                                                     <div class="mb-3 ">
                                                                                                         <label class="form-label">Role</label>
-                                                                                                        <select id="inputState" class="default-select form-control wide">
+                                                                                                        <select name="role" id="role" class="default-select form-control wide" required>
                                                                                                             <option selected>Select...</option>
-                                                                                                            <option>Admin</option>
-                                                                                                            <option>Owner</option>
-                                                                                                            <option>User</option>
+                                                                                                            <option value="Admin">Admin</option>
+                                                                                                            <option value="Moderator">Moderator</option>
+                                                                                                            <option value="Guest">Guest</option>
                                                                                                         </select>
                                                                                                     </div>
                                                                                                 </form>
@@ -82,13 +87,16 @@
                                                                                         </div>
                                                                                         <div class="modal-footer">
                                                                                             <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
-                                                                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                                                                            <button onclick="httpAddUserPost()" type="button" class="btn btn-primary">Save changes</button>
                                                                                         </div>
                                                                                     </div>
                                                                                 </form>
                                                                             </div>
                                                                         </div>
+
                                                                     </th>
+                                                                    @endcan
+
                                                                     <th></th>
 
                                                                 </tr>
@@ -132,53 +140,53 @@
                                                                             </div>
                                                                         </div>
                                                                         <div class="row">
-                                                                        <div class="modal fade" id="editUser">
-                                                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                                <form>
-                                                                                    <div class="modal-content">
-                                                                                        <div class="modal-header">
-                                                                                            <h5 class="modal-title">BreakOut Strategy Inputs</h5>
-                                                                                        </div>
-                                                                                        <div class="modal-body">
-                                                                                            <h5>Inputs</h5>
-                                                                                            <div class="basic-form">
-                                                                                                <form>
-                                                                                                    <div class="mb-3">
-                                                                                                        <div class="input-group">
-                                                                                                            <span class="input-group-text">First and last name</span>
-                                                                                                            <input type="text" class="form-control" placeholder="First name">
-                                                                                                            <input type="text" class="form-control" placeholder="Last name">
+                                                                            <div class="modal fade" id="editUser">
+                                                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                                    <form>
+                                                                                        <div class="modal-content">
+                                                                                            <div class="modal-header">
+                                                                                                <h5 class="modal-title">BreakOut Strategy Inputs</h5>
+                                                                                            </div>
+                                                                                            <div class="modal-body">
+                                                                                                <h5>Inputs</h5>
+                                                                                                <div class="basic-form">
+                                                                                                    <form>
+                                                                                                        <div class="mb-3">
+                                                                                                            <div class="input-group">
+                                                                                                                <span class="input-group-text">First and last name</span>
+                                                                                                                <input type="text" class="form-control" placeholder="First name">
+                                                                                                                <input type="text" class="form-control" placeholder="Last name">
+                                                                                                            </div>
                                                                                                         </div>
-                                                                                                    </div>
-                                                                                                    <div class="mb-3">
-                                                                                                        <label class="form-label">Email</label>
-                                                                                                        <input type="email" class="form-control" placeholder="Email">
-                                                                                                    </div>
-                                                                                                    <div class="mb-3">
-                                                                                                        <label class="form-label">Password</label>
-                                                                                                        <input type="password" class="form-control" placeholder="Password">
-                                                                                                    </div>
+                                                                                                        <div class="mb-3">
+                                                                                                            <label class="form-label">Email</label>
+                                                                                                            <input type="email" class="form-control" placeholder="Email">
+                                                                                                        </div>
+                                                                                                        <div class="mb-3">
+                                                                                                            <label class="form-label">Password</label>
+                                                                                                            <input type="password" class="form-control" placeholder="Password">
+                                                                                                        </div>
 
-                                                                                                    <div class="mb-3 ">
-                                                                                                        <label class="form-label">Role</label>
-                                                                                                        <select id="inputState" class="default-select form-control wide">
-                                                                                                            <option selected>Select...</option>
-                                                                                                            <option>Admin</option>
-                                                                                                            <option>Owner</option>
-                                                                                                            <option>User</option>
-                                                                                                        </select>
-                                                                                                    </div>
-                                                                                                </form>
+                                                                                                        <div class="mb-3 ">
+                                                                                                            <label class="form-label">Role</label>
+                                                                                                            <select id="inputState" class="default-select form-control wide">
+                                                                                                                <option selected>Select...</option>
+                                                                                                                <option>Admin</option>
+                                                                                                                <option>Owner</option>
+                                                                                                                <option>User</option>
+                                                                                                            </select>
+                                                                                                        </div>
+                                                                                                    </form>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="modal-footer">
+                                                                                                <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+                                                                                                <button type="button" class="btn btn-primary">Save changes</button>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <div class="modal-footer">
-                                                                                            <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
-                                                                                            <button type="button" class="btn btn-primary">Save changes</button>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </form>
+                                                                                    </form>
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -230,11 +238,15 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+
+
                                 <div id="broker-list" class="tab-pane fade">
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="card">
-                                                <div class="card-body" >
+                                                <div class="card-body">
                                                     <div class="table-responsive">
                                                         <table class="table table-sm mb-0 table-striped" style="min-height: 30vh;">
                                                             <thead>
@@ -387,3 +399,40 @@
         </div>
     </div>
 </x-app-layout>
+
+<script>
+    function httpAddUserPost() {
+
+        var name = document.getElementById("name").value;
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+        var password_confirmation = document.getElementById("password_confirmation").value;
+        var role = document.getElementById("role").value;
+
+        var baseUrl = "{{ route('api.user.add') }}";
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url: baseUrl,
+                type: 'POST',
+                data: {
+                    "_token": "{{csrf_token()}}",
+                    "name": name,
+                    "email": email,
+                    "password": password,
+                    "password_confirmation": password_confirmation,
+                    "role": role,
+                },
+                crossDomain: true,
+                success: function(response) {
+                    console.log(response);
+                    resolve(response);
+                },
+                error: function(err) {
+                    //Do Something to handle error
+                    //alert("Error!");
+                    reject(err);
+                }
+            });
+        });
+    }
+</script>

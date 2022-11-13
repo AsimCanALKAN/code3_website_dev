@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BrokerController;
 use App\Http\Controllers\HistoryAnalysisController;
+use App\Http\Controllers\UserController;
 use App\View\Components\History\Results;
 
 /*
@@ -35,9 +36,13 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
 
     Route::get('/', [DashboardController::class, 'render'])->name('dashboard');
 
-    Route::get('/breakout-strategy',[BreakoutController::class, 'render'])->name('breakout-strategy');
+    Route::get('/breakout-strategy', [BreakoutController::class, 'render'])->name('breakout-strategy');
 
     Route::get('/history-analysis', [HistoryAnalysisController::class, 'render'])->name('history-analysis');
+
+    Route::get('/bos-breakout-strategy', [BreakoutController::class, 'render'])->name('bos-breakout-strategy');
+
+    Route::get('/bos-history-analysis', [HistoryAnalysisController::class, 'render'])->name('bos-history-analysis');
     Route::get('/symbol-settings', function () {
         return view('home.symbolsettings', ['pagetitle' => 'Symbol Settings']);
     })->name('symbol-settings');
@@ -48,18 +53,20 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
 Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'verified'], 'prefix' => 'api'], function () {
 
     // Profile route
-    Route::prefix('broker')->group(function() {
+    Route::prefix('broker')->group(function () {
         Route::post('/add', [BrokerController::class, 'handleCreateBroker'])->name('api.broker.add');
     });
 
+    Route::prefix('user')->group(function () {
+        Route::post('/add', [UserController::class, 'add'])->name('api.user.add');
+    });
+
     Route::get('/history/get', [HistoryAnalysisController::class, 'getTableData'])
-    ->name('api.history.get');
-    
+        ->name('api.history.get');
+
     Route::get('/history/services/get', [HistoryAnalysisController::class, 'getFromAPI'])
-    ->name('api.history.services');
+        ->name('api.history.services');
 
     Route::get('/breakout/services/get', [BreakoutController::class, 'getFromAPI'])
-    ->name('api.breakout.services');
-    
+        ->name('api.breakout.services');
 });
-

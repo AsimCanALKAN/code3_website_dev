@@ -8,8 +8,9 @@ class AppLayout extends Component
 {
     public $pagetitle;
 
-    public function __construct($pagetitle){
+    public function __construct($pagetitle, $user){
         $this->pagetitle = $pagetitle;
+        $this->user = $user;
     }
     /**
      * Get the view / contents that represents the component.
