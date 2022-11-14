@@ -1,4 +1,3 @@
-<div id="log"></div>
 <div class="row">
     <div class="col-xl-12 tab-content">
         <div class="table-responsive">
