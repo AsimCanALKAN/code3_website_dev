@@ -642,6 +642,7 @@
             const positionsRowId = document.getElementById("positionsRow" + data.transactions[i].id);
 
             if (transactionRowId) {
+                return;
                 var actionCollapsableDiv = document.getElementById("dropdownActionMenu" + data.transactions[i].id);
                 var preClassValueActions = actionCollapsableDiv.className;
                 var ariaExpanded = "false";
@@ -650,7 +651,7 @@
                 if (preClassValueActions == "dropdown-menu show") {
                     ariaExpanded = "true";
                     btnClass = "btn-link show";
-                    style = "style='position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(-218.164px, -3px, 0px);' data-popper-placement='left-start'"
+                    style = "style='position: absolute; inset: 0px 0px auto auto; margin-top: 30px;' data-popper-placement='left-start'"
                 }
                 var threeDotariaExpanded = "false";
                 var threeDotbtnClass = "btn-link";
@@ -660,7 +661,7 @@
                 if (threeDotValueActions == "dropdown-menu show") {
                     threeDotariaExpanded = "true";
                     threeDotbtnClass = "btn-link show";
-                    threeDotstyle = "style='position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(297px, 0px, 0px);' data-popper-placement='right-start'"
+                    threeDotstyle = "style='position: absolute; inset: 0px auto auto 0px; margin-top: 30px;' data-popper-placement='right-start'"
                 }
                 var modalCollapsableDiv = document.getElementById("modalStrategyTradeSettings" + data.transactions[i].id);
                 var modalValueActions = modalCollapsableDiv.className;
@@ -722,9 +723,9 @@
                                             <ul id="dropdownActionMenu${data.transactions[i].id}" class="${preClassValueActions}" ${style} >
                                                 <li class="dropdown-item">
                                                     <div class="col-xl-12">
-                                                        <a href="javascript:void(0)" class="btn btn-warning btn-rounded light"><i class="fa-solid fa-stop"></i> Stop</a>
-                                                        <!-- <a href="javascript:void(0)" class="btn btn-warning btn-rounded light"><i class="fa-solid fa-play"></i> Start</a> -->
-                                                        <a href="javascript:void(0)" class="btn btn-danger btn-rounded light ml-3"><i class="fa-solid fa-xmark"></i> Close All</a>
+                                                        <a onClick="stopSwingBB()" class="btn btn-warning btn-rounded light"><i class="fa-solid fa-stop"></i> Stop</a>
+                                                        <!-- <a onClick="startSwingBB()" class="btn btn-warning btn-rounded light"><i class="fa-solid fa-play"></i> Start</a> -->
+                                                        <a onClick="closeSwingBB(${data.transactions[i].id})" class="btn btn-danger btn-rounded light ml-3"><i class="fa-solid fa-xmark"></i> Close All</a>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -872,9 +873,9 @@
                                             <ul id="dropdownActionMenu${data.transactions[i].id}" class="dropdown-menu" ${style}>
                                                 <li class="dropdown-item">
                                                     <div class="col-xl-12">
-                                                        <a href="javascript:void(0)" class="btn btn-warning btn-rounded light"><i class="fa-solid fa-stop"></i> Stop</a>
-                                                        <!-- <a href="javascript:void(0)" class="btn btn-warning btn-rounded light"><i class="fa-solid fa-play"></i> Start</a> -->
-                                                        <a href="javascript:void(0)" class="btn btn-danger btn-rounded light ml-3"><i class="fa-solid fa-xmark"></i> Close All</a>
+                                                        <a onClick="stopSwingBB()" class="btn btn-warning btn-rounded light"><i class="fa-solid fa-stop"></i> Stop</a>
+                                                        <!-- <a onClick="startSwingBB()" class="btn btn-warning btn-rounded light"><i class="fa-solid fa-play"></i> Start</a> -->
+                                                        <a onClick="closeSwingBB(${data.transactions[i].id})" class="btn btn-danger btn-rounded light ml-3"><i class="fa-solid fa-xmark"></i> Close All</a>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -1077,7 +1078,7 @@
 
 
     async function strategyModalSettings(transactionId, strategyId, modalValueActions = "modal fade", modalValuestyle = "style='display: none;' aria-hidden='true'") {
-
+return;
         var datas = await httpGetNoLoading(theUrl = "/bots/emirhan-bb-stoch/strategies/get?id=" + strategyId);
 
         for (var i = 0; i < datas.strategies.length; i++) {
@@ -1217,5 +1218,49 @@
 
 
         }
+    }
+
+    async function startSwingBB() {
+        var urlRoute = 'api.breakout.services.swing.start'
+        const data = await botsHttpActions(urlRoute, "get?id=1" );
+        toastr.error('Transaction was successfully started.', 'Success');
+        toastr.info('Transaction was successfully started.', 'Success');
+    }
+
+    async function stopSwingBB() {
+        var urlRoute = 'api.breakout.services.swing.stop'
+        const data = await botsHttpActions(urlRoute, "get?id=1");
+        toastr.warning('Transaction was successfully stopped.', 'Warning');
+    }
+
+    async function closeSwingBB(transId) {
+        var urlRoute = 'api.breakout.services.swing.closeAll'
+        const data = await botsHttpActions(urlRoute, "get?id=" + transId);
+        toastr.success(transId + ' Transaction was successfully closed. Profit: ' + data.totalProfit + 'Last Step: ' + data.step, 'Success');
+    }
+
+    async function botsHttpActions(urlRoute, theUrl) {
+        var baseUrl = "{{ route('api.breakout.services.swing.start') }}" + "?theUrl=" + theUrl;
+        if (urlRoute == 'api.breakout.services.swing.closeAll') {
+            baseUrl = "{{ route('api.breakout.services.swing.closeAll') }}" + "?theUrl=" + theUrl;
+        }else if(urlRoute == 'api.breakout.services.swing.stop'){
+            baseUrl = "{{ route('api.breakout.services.swing.stop') }}" + "?theUrl=" + theUrl;
+
+        }
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url: baseUrl,
+                type: 'GET',
+                crossDomain: true,
+                success: function(response) {
+                    resolve(response);
+                },
+                error: function(err) {
+                    //Do Something to handle error
+                    alert("Error!");
+                    reject(err);
+                }
+            });
+        });
     }
 </script>

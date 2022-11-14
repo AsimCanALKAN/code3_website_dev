@@ -18,7 +18,7 @@
     <link href="{{ asset('vendor/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
     <!-- Clockpicker -->
     <link href="{{ asset('vendor/clockpicker/css/bootstrap-clockpicker.min.css') }}" rel="stylesheet">
-
+    <link rel="stylesheet" href="{{ asset('vendor/toastr/css/toastr.min.css') }}">
     <!-- Pick date -->
     <link rel="stylesheet" href="{{ asset('vendor/pickadate/themes/default.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/pickadate/themes/default.date.css') }}">
@@ -67,8 +67,8 @@
 
 {{ $scripts ?? '' }}
 
-
-
+<script src="{{ asset('vendor/toastr/js/toastr.min.js')}}"></script>
+<script src="{{ asset('js/plugins-init/toastr-init.js')}}"></script>
 <script src="{{ asset('js/custom.min.js')}}"></script>
 <script src="{{ asset('js/dlabnav-init.js')}}"></script>
 

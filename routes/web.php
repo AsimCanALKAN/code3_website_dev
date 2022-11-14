@@ -69,4 +69,13 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
 
     Route::get('/breakout/services/get', [BreakoutController::class, 'getFromAPI'])
         ->name('api.breakout.services');
+
+    Route::get('/breakout/bots/close', [BreakoutController::class, 'closeSwingBB'])
+        ->name('api.breakout.services.swing.closeAll');
+
+    Route::get('/breakout/bots/start', [BreakoutController::class, 'startSwingBB'])
+        ->name('api.breakout.services.swing.start');
+
+    Route::get('/breakout/bots/stop', [BreakoutController::class, 'stopSwingBB'])
+        ->name('api.breakout.services.swing.stop');
 });
