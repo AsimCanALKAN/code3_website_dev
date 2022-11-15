@@ -60,9 +60,6 @@
                                                                 <label class="me-sm-2">Brokers</label>
                                                                 <select onchange="getBrokersFilter(this, 'BrokersFilterLoadingDIV', 'broker_')" class="me-sm-4 form-control wide" id="broker_BrokersFilter" style="width:100%">
                                                                     <option value="Select.." selected>Select..</option>
-                                                                    @foreach ($data->brokers->brokers as $breakout)
-                                                                    <option value={{$breakout->id}}>{{$breakout->name}}</option>
-                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -78,9 +75,6 @@
                                                                 <label class="me-sm-2">Symbols</label>
                                                                 <select onchange="getPairsFilter(this, 'SymbolsFilterLoadingDIV', 'broker_')" class="me-sm-4 form-control wide" id="broker_SymbolsFilter" style="width:100%" disabled>
                                                                     <option value="Select.." selected>Select..</option>
-                                                                    @foreach ($data->pairs->pairs as $breakout)
-                                                                    <option value="{{$breakout->id}}_{{$breakout->broker_id}}">{{$breakout->symbol}}</option>
-                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -96,9 +90,6 @@
                                                                 <label class="me-sm-2">Account ID</label>
                                                                 <select onchange="getAccountsFilter(this, 'AccountsFilterLoadingDIV', 'broker_')" class="me-sm-4 form-control wide" id="broker_AccountsFilter" style="width:100%" disabled>
                                                                     <option value="Select.." selected>Select..</option>
-                                                                    @foreach ($data->accounts->accounts as $breakout)
-                                                                    <option value="{{$breakout->id}}_{{$breakout->broker_id}}"> {{$breakout->login}} ({{ $breakout->owner}}) </option>
-                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -118,9 +109,6 @@
                                                                 <label class="me-sm-2">Symbols</label>
                                                                 <select onchange="getPairsFilter(this, 'SymbolsFilterLoadingDIV', 'symbol_')" class="me-sm-2 form-control wide" id="symbol_SymbolsFilter" style="width:100%">
                                                                     <option value="Select.." selected>Select..</option>
-                                                                    @foreach ($data->pairs->pairs as $breakout)
-                                                                    <option value="{{$breakout->id}}_{{$breakout->broker_id}}">{{$breakout->symbol}}</option>
-                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -136,9 +124,6 @@
                                                                 <label class="me-sm-2">Brokers</label>
                                                                 <select onchange="getBrokersFilter(this, 'BrokersFilterLoadingDIV', 'symbol_')" class="me-sm-2 form-control wide" id="symbol_BrokersFilter" style="width:100%" disabled>
                                                                     <option value="Select.." selected>Select..</option>
-                                                                    @foreach ($data->brokers->brokers as $breakout)
-                                                                    <option value={{$breakout->id}}>{{$breakout->name}}</option>
-                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -154,9 +139,6 @@
                                                                 <label class="me-sm-2">Account ID</label>
                                                                 <select onchange="getAccountsFilter(this, 'AccountsFilterLoadingDIV', 'symbol_')" class="me-sm-2 form-control wide" id="symbol_AccountsFilter" style="width:100%" disabled>
                                                                     <option value="Select.." selected>Select..</option>
-                                                                    @foreach ($data->accounts->accounts as $breakout)
-                                                                    <option value="{{$breakout->id}}_{{$breakout->broker_id}}"> {{$breakout->login}} ({{ $breakout->owner}}) </option>
-                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -176,9 +158,6 @@
                                                                 <label class="me-sm-2">Account ID</label>
                                                                 <select onchange="getAccountsFilter(this, 'AccountsFilterLoadingDIV', 'account_')" class="me-sm-2 form-control wide" id="account_AccountsFilter" style="width:100%">
                                                                     <option value="Select.." selected>Select..</option>
-                                                                    @foreach ($data->accounts->accounts as $breakout)
-                                                                    <option value="{{$breakout->id}}_{{$breakout->broker_id}}"> {{$breakout->login}} ({{ $breakout->owner}}) </option>
-                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -194,9 +173,6 @@
                                                                 <label class="me-sm-2">Symbols</label>
                                                                 <select onchange="getPairsFilter(this, 'SymbolsFilterLoadingDIV', 'account_')" class="me-sm-2 form-control wide" id="account_SymbolsFilter" style="width:100%" disabled>
                                                                     <option value="Select.." selected>Select..</option>
-                                                                    @foreach ($data->pairs->pairs as $breakout)
-                                                                    <option value="{{$breakout->id}}_{{$breakout->broker_id}}">{{$breakout->symbol}}</option>
-                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -212,9 +188,6 @@
                                                                 <label class="me-sm-2">Brokers</label>
                                                                 <select onchange="getBrokersFilter(this, 'BrokersFilterLoadingDIV', 'account_')" class="me-sm-2 form-control wide" id="account_BrokersFilter" style="width:100%" disabled>
                                                                     <option value="Select.." selected>Select..</option>
-                                                                    @foreach ($data->brokers->brokers as $breakout)
-                                                                    <option value={{$breakout->id}}>{{$breakout->name}}</option>
-                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -287,6 +260,24 @@
 
 
 <script>
+    var user = '<?php print($data->userHasAccount); ?>';
+    var userAccountList = [];
+    var userBrokerList = [];
+    for (var i = 0; i < JSON.parse(user).length; i++) {
+        userAccountList.push(JSON.parse(user)[i].account_id.toString())
+        userBrokerList.push(JSON.parse(user)[i].broker_id)
+    }
+
+
+    function init() {
+        getPairsFilter(document.getElementById("symbol_SymbolsFilter"), 'SymbolsFilterLoadingDIV', 'symbol_');
+        getBrokersFilter(document.getElementById("broker_BrokersFilter"), 'BrokersFilterLoadingDIV', 'broker_');
+        getAccountsFilter(document.getElementById("account_AccountsFilter"), 'AccountsFilterLoadingDIV', 'account_');
+    }
+
+    window.addEventListener("load", init, false);
+
+
     async function getPairsFilter(selectObject, loadingDivId, divId) {
         var value = selectObject.value;
         const myArray = value.split("_");
@@ -305,14 +296,16 @@
             accountSelectElement.value = 'Select..';
             brokerSelectElement.disabled = true;
             accountSelectElement.disabled = true;
-            var data = httpGet(theUrl = "/auth/pairs/", selectObject = selectObject, selectLoading = pairSelectLoading);
+            var data = await httpGet(theUrl = "/auth/pairs/", selectObject = selectObject, selectLoading = pairSelectLoading);
             $('#' + divId + "SymbolsFilter").find('option')
                 .remove()
                 .end()
                 .append('<option selected="selected">Select..</option>')
                 .val('Select..')
             for (var i = 0; i < data.pairs.length; i++) {
-                $('#' + divId + "SymbolsFilter").find('option').end().append('<option value="' + data.pairs[i].id + '">' + data.pairs[i].symbol + '</option>');
+                if (userBrokerList.includes(data.pairs[i].broker_id)) {
+                    $('#' + divId + "SymbolsFilter").find('option').end().append('<option value="' + data.pairs[i].id + '_' + data.pairs[i].broker_id + '">' + data.pairs[i].symbol + '</option>');
+                }
             }
         } else {
             if (divId == "symbol_") {
@@ -333,7 +326,7 @@
                         .append('<option selected="selected">Select..</option>')
                         .val('Select..')
                     for (var i = 0; i < resultAccount.accounts.length; i++) {
-                        $('#' + divId + "AccountsFilter").find('option').end().append('<option value="' + resultAccount.accounts[i].id + '">' + resultAccount.accounts[i].login + ' (' + resultAccount.accounts[i].owner + ')' + '</option>');
+                        $('#' + divId + "AccountsFilter").find('option').end().append('<option value="' + resultAccount.accounts[i].id + '_' + resultAccount.accounts[i].broker_id + '">' + resultAccount.accounts[i].login + ' (' + resultAccount.accounts[i].owner + ')' + '</option>');
                     }
                 } catch (e) {
                     console.log(e);
@@ -364,14 +357,16 @@
             accountSelectElement.value = 'Select..';
             symbolSelectElement.disabled = true;
             accountSelectElement.disabled = true;
-            var data = httpGet(theUrl = "/auth/brokers/", selectObject = selectObject, selectLoading = pairSelectLoading);
+            var data = await httpGet(theUrl = "/auth/brokers/", selectObject = selectObject, selectLoading = pairSelectLoading);
             $('#' + divId + "BrokersFilter").find('option')
                 .remove()
                 .end()
                 .append('<option selected="selected">Select..</option>')
                 .val('Select..')
-            for (var i = 0; i < data.accounts.length; i++) {
-                $('#' + divId + "SymbolsFilter").find('option').end().append('<option value="' + data.accounts[i].id + '">' + data.accounts[i].name + '</option>');
+            for (var i = 0; i < data.brokers.length; i++) {
+                if (userBrokerList.includes(data.brokers[i].id)) {
+                    $('#' + divId + "BrokersFilter").find('option').end().append('<option value="' + data.brokers[i].id + '">' + data.brokers[i].name + '</option>');
+                }
             }
         } else {
             if (divId == "broker_") {
@@ -385,7 +380,7 @@
                         .append('<option selected="selected">Select..</option>')
                         .val('Select..');
                     for (var i = 0; i < resultBroker.pairs.length; i++) {
-                        $('#' + divId + "SymbolsFilter").find('option').end().append('<option value="' + resultBroker.pairs[i].id + '">' + resultBroker.pairs[i].symbol + '</option>');
+                        $('#' + divId + "SymbolsFilter").find('option').end().append('<option value="' + resultBroker.pairs[i].id + '_' + resultBroker.pairs[i].broker_id + '">' + resultBroker.pairs[i].symbol + '</option>');
                     }
                     var resultAccount = await httpGet(theUrl = "/auth/accounts/get?broker_id=" + valueBrokerId, selectObject = selectObject, selectLoading = pairSelectLoading);
                     // var resultAccount = await httpGet(theUrl = "/auth/accounts/get?broker_id=7&=login=2401", selectObject = selectObject, selectLoading = pairSelectLoading);
@@ -395,7 +390,7 @@
                         .append('<option selected="selected">Select..</option>')
                         .val('Select..')
                     for (var i = 0; i < resultAccount.accounts.length; i++) {
-                        $('#' + divId + "AccountsFilter").find('option').end().append('<option value="' + resultAccount.accounts[i].id + '">' + resultAccount.accounts[i].login + ' (' + resultAccount.accounts[i].owner + ')' + '</option>');
+                        $('#' + divId + "AccountsFilter").find('option').end().append('<option value="' + resultAccount.accounts[i].id + '_' + resultAccount.accounts[i].broker_id + '">' + resultAccount.accounts[i].login + ' (' + resultAccount.accounts[i].owner + ')' + '</option>');
                     }
                 } catch (e) {
                     console.log(e);
@@ -431,12 +426,15 @@
             brokerSelectElement.value = 'Select..';
             symbolSelectElement.disabled = true;
             brokerSelectElement.disabled = true;
-            var data = httpGet(theUrl = "/auth/accounts/", selectObject = selectObject, selectLoading = pairSelectLoading);
+            var data = await httpGet(theUrl = "/auth/accounts/", selectObject = selectObject, selectLoading = pairSelectLoading);
+            $('#' + divId + "AccountsFilter").find('option')
+                .remove()
+                .end()
+                .append('<option selected="selected">Select..</option>')
+                .val('Select..')
             for (var i = 0; i < data.accounts.length; i++) {
-                $('#' + divId + "AccountsFilter").find('option').remove().end().append('<option selected="selected">Select..</option>')
-                    .val('Select..')
-                for (var i = 0; i < data.accounts.length; i++) {
-                    $('#' + divId + "SymbolsFilter").find('option').end().append('<option value="' + data.accounts[i].id + '">' + data.accounts[i].login + ' (' + data.accounts[i].owner + ')</option>');
+                if (userAccountList.includes(data.accounts[i].login)) {
+                    $('#' + divId + "AccountsFilter").find('option').end().append('<option value="' + data.accounts[i].id + '_' + data.accounts[i].broker_id + '">' + data.accounts[i].login + ' (' + data.accounts[i].owner + ')</option>');
                 }
             }
         } else {
@@ -451,7 +449,7 @@
                         .append('<option selected="selected">Select..</option>')
                         .val('Select..')
                     for (var i = 0; i < resultPair.pairs.length; i++) {
-                        $('#' + divId + "SymbolsFilter").find('option').end().append('<option value="' + resultPair.pairs[i].id + '">' + resultPair.pairs[i].symbol + '</option>');
+                        $('#' + divId + "SymbolsFilter").find('option').end().append('<option value="' + resultPair.pairs[i].id + '_' + resultPair.pairs[i].broker_id + '">' + resultPair.pairs[i].symbol + '</option>');
                     }
                     var resultBroker = await httpGet(theUrl = "/auth/brokers/get?id=" + valueBrokerId, selectObject = selectObject, selectLoading = pairSelectLoading);
                     // var resultAccount = await httpGet(theUrl = "/auth/accounts/get?broker_id=7&login=2401", selectObject = selectObject, selectLoading = pairSelectLoading);

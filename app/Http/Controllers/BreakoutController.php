@@ -23,10 +23,7 @@ class BreakoutController extends Controller
     {
         $userid = Auth::user()->id;
         $this->data = $this->getHistoryFromDb();
-        $this->data->pairs = $this->getPairsStart();
         $this->data->platforms = $this->getPlatformsStart();
-        $this->data->brokers = $this->getBrokersStart();
-        $this->data->accounts = $this->getAccountsStart();
         $this->data->bots = $this->getBotsStart();
         $this->data->userHasAccount = UserHasAccountController::get();
 
