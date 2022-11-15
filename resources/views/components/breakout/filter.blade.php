@@ -266,6 +266,13 @@
 <script>
     var wsUri = "ws://157.90.31.191:30200/v1/bots/monitoring/emirhan-bb-stoch/";
     var log;
+    var user = '<?php  Print($data->userHasAccount); ?>';
+    var userAccountList = [];
+    var userBrokerList = [];
+    for(var i =0; i<JSON.parse(user).length;i++ ){
+        userAccountList.push(JSON.parse(user)[i].account_id)
+        userBrokerList.push(JSON.parse(user)[i].broker_id)
+    }
 
     function init() {
         testWebSocket();

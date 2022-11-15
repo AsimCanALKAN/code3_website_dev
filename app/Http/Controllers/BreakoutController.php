@@ -22,15 +22,16 @@ class BreakoutController extends Controller
     private function getHistory($request)
     {
         $userid = Auth::user()->id;
+        $this->data = $this->getHistoryFromDb();
+        $this->data->pairs = $this->getPairsStart();
+        $this->data->platforms = $this->getPlatformsStart();
+        $this->data->brokers = $this->getBrokersStart();
+        $this->data->accounts = $this->getAccountsStart();
+        $this->data->bots = $this->getBotsStart();
+        $this->data->userHasAccount = UserHasAccountController::get();
 
-            $this->data = $this->getHistoryFromDb();
-            $this->data->pairs = $this->getPairsStart();
-            $this->data->platforms = $this->getPlatformsStart();
-            $this->data->brokers = $this->getBrokersStart();
-            $this->data->accounts = $this->getAccountsStart();
-            $this->data->bots = $this->getBotsStart();
-            //Cache::put($cachekey, $this->data, 10);
-            return $this->data;
+        //Cache::put($cachekey, $this->data, 10);
+        return $this->data;
     }
 
     private function getHistoryFromDb()
@@ -61,7 +62,7 @@ class BreakoutController extends Controller
 
     private function getPairsStart()
     {
-        $data = $this->httpGet( ["theUrl" => "/auth/pairs/"]);
+        $data = $this->httpGet(["theUrl" => "/auth/pairs/"]);
         return  $data;
     }
 
@@ -77,7 +78,6 @@ class BreakoutController extends Controller
 
         //$data = $this->httpGet($request->all());
         return response()->json(['closed' => 'true', 'totalProfit' => 12500, 'step' => 6]);
-
     }
 
     public function stopSwingBB(Request $request)
@@ -85,7 +85,6 @@ class BreakoutController extends Controller
 
         //$data = $this->httpGet($request->all());
         return response()->json(['stoped' => 'true']);
-
     }
 
     public function startSwingBB(Request $request)
@@ -93,31 +92,30 @@ class BreakoutController extends Controller
 
         //$data = $this->httpGet($request->all());
         return response()->json(['started' => 'true']);
-
     }
 
     private function getPlatformsStart()
     {
-        $data = $this->httpGet( ["theUrl" => "/auth/platforms/"]);
+        $data = $this->httpGet(["theUrl" => "/auth/platforms/"]);
         return  $data;
     }
 
     private function getBrokersStart()
     {
-        $data = $this->httpGet( ["theUrl" => "/auth/brokers/"]);
+        $data = $this->httpGet(["theUrl" => "/auth/brokers/"]);
         return  $data;
     }
 
 
     private function getAccountsStart()
     {
-        $data = $this->httpGet( ["theUrl" => "/auth/accounts/"]);
+        $data = $this->httpGet(["theUrl" => "/auth/accounts/"]);
         return  $data;
     }
 
     private function getBotsStart()
     {
-        $data = $this->httpGet( ["theUrl" => "/auth/bots/"]);
+        $data = $this->httpGet(["theUrl" => "/auth/bots/"]);
         return  $data;
     }
 
@@ -127,7 +125,7 @@ class BreakoutController extends Controller
         $client = new \GuzzleHttp\Client();
         foreach ($theUrl as $k => $urlPar) {
             if ($urlPar[0] != "/") {
-                $baseUrl = $baseUrl .  '&' .$k . "=" . $urlPar;
+                $baseUrl = $baseUrl .  '&' . $k . "=" . $urlPar;
             }
         }
         $res = $client->get($baseUrl);
