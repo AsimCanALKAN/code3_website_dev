@@ -242,16 +242,19 @@
     var user = '<?php print($data->userHasAccount); ?>';
     var userAccountList = [];
     var userBrokerList = [];
+
     for (var i = 0; i < JSON.parse(user).length; i++) {
         userAccountList.push(JSON.parse(user)[i].account_id.toString())
         userBrokerList.push(JSON.parse(user)[i].broker_id)
     }
 
-    function init() {
+
+    async function init() {
+
         getPairsFilter(document.getElementById("symbol_SymbolsFilter"), 'SymbolsFilterLoadingDIV', 'symbol_');
         getBrokersFilter(document.getElementById("broker_BrokersFilter"), 'BrokersFilterLoadingDIV', 'broker_');
         getAccountsFilter(document.getElementById("account_AccountsFilter"), 'AccountsFilterLoadingDIV', 'account_');
-        testWebSocket();
+        testWebSocket("{accounts: {[" + userAccountList + "]}");
     }
 
     function testWebSocket(endpointPath) {
@@ -273,7 +276,7 @@
     }
 
     function onOpen(evt) {
-        // sendMessage("Hello world");
+        sendMessage("{accounts: {[" + userAccountList + "]}");
     }
 
     function onClose(evt) {
@@ -337,7 +340,6 @@
                         .append('<option selected="selected" value="' + resultBroker.broker.id + '">' + resultBroker.broker.name + '</option>');
                     var resultAccount = await httpGet(theUrl = "/auth/accounts/get?broker_id=" + valueBrokerId, selectObject = selectObject, selectLoading = pairSelectLoading);
                     // var resultAccount = await httpGet(theUrl = "/auth/accounts/get?broker_id=7&login=2401", selectObject = selectObject, selectLoading = pairSelectLoading);
-                    console.log(resultAccount);
                     $('#' + divId + "AccountsFilter").find('option')
                         .remove()
                         .end()
@@ -753,7 +755,6 @@
                     var collapsableDiv = document.getElementById("default_collapse" + data.transactions[i].id);
                     var preClassValue = collapsableDiv.className;
                     positionsRowId.innerHTML = ` 
-                    <?php echo "asdasdasd" ?>
                                         <td colspan="12" style="padding:0">
                                             <div id="default_collapse${data.transactions[i].id}" class="${preClassValue}" data-bs-parent="#example6">
                                                 <table class="table card-table display mb-4 dataTablesCard text-white" style="background-color: #496ecc;">
