@@ -294,7 +294,6 @@
     }
 
     function sendMessage(message) {
-        console.log(message)
         websocket.send(message);
     }
 
@@ -735,7 +734,7 @@
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ ${data.transactions[i].weighted_price}</span></td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ ${data.transactions[i].current_price}</span></td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ ${data.transactions[i].target_profit_price}</span></td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;">${data.transactions[i].step}</td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;">Step: ${data.transactions[i].step} - ${data.transactions[i].type}</td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;">
                                         ${await profitSumHTML(data.transactions[i].profit)}
 
@@ -889,7 +888,7 @@
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ ${data.transactions[i].weighted_price}</span></td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ ${data.transactions[i].current_price}</span></td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ ${data.transactions[i].target_profit_price}</span></td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;">${data.transactions[i].step}</td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;">Step: ${data.transactions[i].step} - ${data.transactions[i].type}</td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;">
                                         ${await profitHTML(data.transactions[i].profit)}
 
@@ -1307,7 +1306,6 @@
     async function closeSwingBB(transId) {
         const dataTrans = await httpGetNoLoading(theUrl = "/bots/emirhan-bb-stoch/transactions/get?id=" + transId);
         var urlRoute = 'api.breakout.services.swing.closeAll'
-        console.log(dataTrans)
         var magic_number = dataTrans.transactions[0].positions[0].magic_number
         var type = "buy"
         if (dataTrans.transactions[0].positions[0].type = 1) {
