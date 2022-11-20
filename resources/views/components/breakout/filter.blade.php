@@ -276,7 +276,7 @@
     }
 
     function onOpen(evt) {
-        sendMessage("{accounts: {[" + userAccountList + "]}");
+        sendMessage("{accounts: [" + userAccountList + "]");
     }
 
     function onClose(evt) {
@@ -570,7 +570,8 @@
             }
 
             websocket.close()
-            testWebSocket(endpointPath);
+            //testWebSocket(endpointPath);
+            testWebSocket("{accounts: {[" + userAccountList + "]}")
 
 
         } else if (symbolFilterTab.className == "nav-link active") {
@@ -592,7 +593,8 @@
 
             }
             websocket.close()
-            testWebSocket(endpointPath);
+            //testWebSocket(endpointPath);
+            testWebSocket("{accounts: {[" + userAccountList + "]}")
 
 
         } else if (accountFilterTab.className == "nav-link active") {
@@ -614,7 +616,8 @@
                 endpointPath = endpointPath + "&pair_id=" + valueSymbolId;
             }
             websocket.close()
-            testWebSocket(endpointPath);
+            //testWebSocket(endpointPath);
+            testWebSocket("{accounts: {[" + userAccountList + "]}")
 
         }
         filterButtonLoading.style.visibility = 'hidden';
@@ -675,29 +678,33 @@
             const positionsRowId = document.getElementById("positionsRow" + data.transactions[i].id);
 
             if (transactionRowId) {
-                var actionCollapsableDiv = document.getElementById("dropdownActionMenu" + data.transactions[i].id);
-                var preClassValueActions = actionCollapsableDiv.className;
-                var ariaExpanded = "false";
-                var btnClass = "btn-link";
-                var style = "style";
-                if (preClassValueActions == "dropdown-menu show") {
-                    ariaExpanded = "true";
-                    btnClass = "btn-link show";
-                    style = "style='position: absolute; inset: 0px 0px auto auto; margin-top: 30px;' data-popper-placement='left-start'"
-                }
-                var threeDotariaExpanded = "false";
-                var threeDotbtnClass = "btn-link";
-                var threeDotstyle = "style";
-                var threeDotCollapsableDiv = document.getElementById("threeDotTarget" + data.transactions[i].id);
-                var threeDotValueActions = threeDotCollapsableDiv.className;
-                if (threeDotValueActions == "dropdown-menu show") {
-                    threeDotariaExpanded = "true";
-                    threeDotbtnClass = "btn-link show";
-                    threeDotstyle = "style='position: absolute; inset: 0px auto auto 0px; margin-top: 30px;' data-popper-placement='right-start'"
-                }
+                if (data.status == "closed") {
+                    
+                    transactionRowId.remove();
+                } else {
+                    var actionCollapsableDiv = document.getElementById("dropdownActionMenu" + data.transactions[i].id);
+                    var preClassValueActions = actionCollapsableDiv.className;
+                    var ariaExpanded = "false";
+                    var btnClass = "btn-link";
+                    var style = "style";
+                    if (preClassValueActions == "dropdown-menu show") {
+                        ariaExpanded = "true";
+                        btnClass = "btn-link show";
+                        style = "style='position: absolute; inset: 0px 0px auto auto; margin-top: 30px;' data-popper-placement='left-start'"
+                    }
+                    var threeDotariaExpanded = "false";
+                    var threeDotbtnClass = "btn-link";
+                    var threeDotstyle = "style";
+                    var threeDotCollapsableDiv = document.getElementById("threeDotTarget" + data.transactions[i].id);
+                    var threeDotValueActions = threeDotCollapsableDiv.className;
+                    if (threeDotValueActions == "dropdown-menu show") {
+                        threeDotariaExpanded = "true";
+                        threeDotbtnClass = "btn-link show";
+                        threeDotstyle = "style='position: absolute; inset: 0px auto auto 0px; margin-top: 30px;' data-popper-placement='right-start'"
+                    }
 
-                // Modal add<a data-bs-toggle="modal" data-bs-target="#modalStrategyTradeSettings${data.transactions[i].id}" class="dropdown-item"><i class="las la-cog scale5 me-3"></i>Strategy Settings</a>
-                transactionRowId.innerHTML = ` 
+                    // Modal add<a data-bs-toggle="modal" data-bs-target="#modalStrategyTradeSettings${data.transactions[i].id}" class="dropdown-item"><i class="las la-cog scale5 me-3"></i>Strategy Settings</a>
+                    transactionRowId.innerHTML = ` 
                                     <td style="border-color: transparent;">
                                         <div class="dropdown dropstart">
                                             <a id="threeDotMenu${data.transactions[i].id}" href="javascript:void(0);" class="${threeDotbtnClass}" data-bs-toggle="dropdown" data-bs-target="threeDotTarget${data.transactions[i].id}" aria-expanded="${threeDotariaExpanded}">
@@ -751,10 +758,10 @@
                                     </td>
 
                                 `;
-                if (positionsRowId) {
-                    var collapsableDiv = document.getElementById("default_collapse" + data.transactions[i].id);
-                    var preClassValue = collapsableDiv.className;
-                    positionsRowId.innerHTML = ` 
+                    if (positionsRowId) {
+                        var collapsableDiv = document.getElementById("default_collapse" + data.transactions[i].id);
+                        var preClassValue = collapsableDiv.className;
+                        positionsRowId.innerHTML = ` 
                                         <td colspan="12" style="padding:0">
                                             <div id="default_collapse${data.transactions[i].id}" class="${preClassValue}" data-bs-parent="#example6">
                                                 <table class="table card-table display mb-4 dataTablesCard text-white" style="background-color: #496ecc;">
@@ -838,6 +845,8 @@
                                             </div>
                                         </td>
                                     `;
+                    }
+
                 }
 
             } else {
