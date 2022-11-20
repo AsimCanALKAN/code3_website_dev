@@ -254,7 +254,7 @@
         getPairsFilter(document.getElementById("symbol_SymbolsFilter"), 'SymbolsFilterLoadingDIV', 'symbol_');
         getBrokersFilter(document.getElementById("broker_BrokersFilter"), 'BrokersFilterLoadingDIV', 'broker_');
         getAccountsFilter(document.getElementById("account_AccountsFilter"), 'AccountsFilterLoadingDIV', 'account_');
-        testWebSocket("{accounts: {[" + userAccountList + "]}");
+        testWebSocket('{"accounts": {[' + userAccountList + ']}');
     }
 
     function testWebSocket(endpointPath) {
@@ -276,7 +276,7 @@
     }
 
     function onOpen(evt) {
-        sendMessage("{accounts: [" + userAccountList + "]");
+        sendMessage('{"accounts": [' + userAccountList + ']}');
     }
 
     function onClose(evt) {
@@ -294,6 +294,7 @@
     }
 
     function sendMessage(message) {
+        console.log(message)
         websocket.send(message);
     }
 
@@ -571,7 +572,7 @@
 
             websocket.close()
             //testWebSocket(endpointPath);
-            testWebSocket("{accounts: {[" + userAccountList + "]}")
+            testWebSocket('{"accounts": [' + userAccountList + ']}')
 
 
         } else if (symbolFilterTab.className == "nav-link active") {
@@ -594,7 +595,7 @@
             }
             websocket.close()
             //testWebSocket(endpointPath);
-            testWebSocket("{accounts: {[" + userAccountList + "]}")
+            testWebSocket('{"accounts": [' + userAccountList + ']}')
 
 
         } else if (accountFilterTab.className == "nav-link active") {
@@ -617,7 +618,7 @@
             }
             websocket.close()
             //testWebSocket(endpointPath);
-            testWebSocket("{accounts: {[" + userAccountList + "]}")
+            testWebSocket('{"accounts": [' + userAccountList + ']}')
 
         }
         filterButtonLoading.style.visibility = 'hidden';
@@ -679,7 +680,7 @@
 
             if (transactionRowId) {
                 if (data.status == "close") {
-                    toastr.success(data.transactions[i].id + ' Transaction is closed', 'Success')
+                    toastr.success(data.transactions[i].id + ' Transaction is closed. Profit: ' +data.transactions[i].profit , 'Success')
                     transactionRowId.remove();
                 } else {
                     var actionCollapsableDiv = document.getElementById("dropdownActionMenu" + data.transactions[i].id);
@@ -724,23 +725,23 @@
                                     </td>
                                     <!-- Button trigger modal -->
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>#${data.transactions[i].id}</span></td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>${data.transactions[i].broker_id}</span></td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>${data.transactions[i].account_id}</span></td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>${data.account_id}</span></td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>${data.account_id}</span></td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="badge light badge-success">In Transaction</span></td>
                                     <!--<td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="badge light badge-warning">Pending</span></td>-->
                                     <!--<td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="badge light badge-info">Boarding</span></td>-->
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">${data.transactions[i].account_id}</span></td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">${data.transactions[i].positions[data.transactions[i].positions.length -1].magic_number}</span></td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ 1.05645</span></td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ 1.06342</span></td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ 1.07342</span></td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;">${await positionTypeTransaction(data.transactions[i].positions[data.transactions[i].positions.length -1].type, await getMaxStep(data.transactions[i].positions))}</td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">${data.pair_id}</span></td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">${data.transactions[i].magic_number}</span></td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ ${data.transactions[i].weighted_price}</span></td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ ${data.transactions[i].current_price}</span></td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ ${data.transactions[i].target_profit_price}</span></td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;">${data.transactions[i].step}</td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;">
-                                        ${await profitSumHTML(data.transactions[i].positions)}
+                                        ${await profitSumHTML(data.transactions[i].profit)}
 
 
                                     </td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>${data.transactions[i].broker_id}</span></td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>${data.transactions[i].volume}</span></td>
                                     <td style="border-color: transparent;">
                                         <div class="dropdown dropstart">
                                             <a href="javascript:void(0);" class="${btnClass}" data-bs-toggle="dropdown" data-bs-target="#dropdownActionMenu${data.transactions[i].id}" aria-expanded="${ariaExpanded}">
@@ -846,7 +847,6 @@
                                         </td>
                                     `;
                     }
-
                 }
 
             } else {
@@ -879,23 +879,23 @@
                                     </td>
                                     <!-- Button trigger modal -->
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>#${data.transactions[i].id}</span></td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>${data.transactions[i].broker_id}</span></td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>${data.transactions[i].account_id}</span></td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>${data.account_id}</span></td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>${data.account_id}</span></td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="badge light badge-success">In Transaction</span></td>
                                     <!--<td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="badge light badge-warning">Pending</span></td>-->
                                     <!--<td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="badge light badge-info">Boarding</span></td>-->
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">${data.transactions[i].account_id}</span></td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">${data.transactions[i].positions[data.transactions[i].positions.length -1].magic_number}</span></td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ 1.05645</span></td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ 1.06342</span></td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ 1.07342</span></td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;">${await positionTypeTransaction(data.transactions[i].positions[data.transactions[i].positions.length -1].type, await getMaxStep(data.transactions[i].positions))}</td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">${data.pair_id}</span></td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">${data.transactions[i].magic_number}</span></td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ ${data.transactions[i].weighted_price}</span></td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ ${data.transactions[i].current_price}</span></td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ ${data.transactions[i].target_profit_price}</span></td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;">${data.transactions[i].step}</td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;">
-                                        ${await profitHTML(data.transactions[i].total_profit)}
+                                        ${await profitHTML(data.transactions[i].profit)}
 
 
                                     </td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>${data.transactions[i].broker_id}</span></td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>${data.transactions[i].volume}</span></td>
                                     <td style="border-color: transparent;">
                                         <div class="dropdown dropstart">
                                             <a href="javascript:void(0);" class="btn-link" data-bs-toggle="dropdown" aria-expanded="false">
@@ -1108,11 +1108,11 @@
     }
 
 
-    async function profitSumHTML(data) {
-        var profit = 0;
-        for (var i = 0; i < data.length; i++) {
-            profit = profit + data[i].profit + data[i].commission + data[i].swap;
-        }
+    async function profitSumHTML(profit) {
+        // var profit = 0;
+        // for (var i = 0; i < data.length; i++) {
+        //     profit = profit + data[i].profit + data[i].commission + data[i].swap;
+        // }
         if (profit > 0) {
             return `<div>
                                                     <svg class="me-2 oi-icon bgl-success" width="63" height="63" viewBox="0 0 63 63" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1320,7 +1320,7 @@
             toastr.error(transId + ' Close Action Error. Please try again after 2 seconds.', 'Error');
 
         } else {
-            toastr.success(transId + ' Close Action is sent to server. Please check the closed transaction row.', 'Success');
+            toastr.success(transId + ' Close Action is sent to server. Please wait new notification about closed transaction.', 'Success');
 
         }
     }

@@ -73,7 +73,7 @@ class BreakoutController extends Controller
     public function closeSwingBB(Request $request)
     {
 
-        $data = $this->httpGet($request->all());
+        $data = $this->httpPost($request->all());
         return  $data;
     }
 
@@ -126,6 +126,23 @@ class BreakoutController extends Controller
             }
         }
         $res = $client->get($baseUrl);
+        //echo $res->getStatusCode(); // 200
+        //echo $res->getBody(); // { "type": "User", ....
+        //Cache::put($cachekey, $res->getBody(), 5);
+        return json_decode($res->getBody());
+    }
+
+
+    private function httpPost($theUrl)
+    {
+        $baseUrl = 'http://157.90.31.191:30000/v1' . $theUrl['theUrl'];
+        $client = new \GuzzleHttp\Client();
+        foreach ($theUrl as $k => $urlPar) {
+            if ($urlPar[0] != "/") {
+                $baseUrl = $baseUrl .  '&' . $k . "=" . $urlPar;
+            }
+        }
+        $res = $client->post($baseUrl);
         //echo $res->getStatusCode(); // 200
         //echo $res->getBody(); // { "type": "User", ....
         //Cache::put($cachekey, $res->getBody(), 5);
