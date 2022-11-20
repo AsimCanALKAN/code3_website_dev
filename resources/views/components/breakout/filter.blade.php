@@ -678,8 +678,8 @@
             const positionsRowId = document.getElementById("positionsRow" + data.transactions[i].id);
 
             if (transactionRowId) {
-                if (data.status == "closed") {
-                    
+                if (data.status == "close") {
+                    toastr.success(data.transactions[i].id + ' Transaction is closed', 'Success')
                     transactionRowId.remove();
                 } else {
                     var actionCollapsableDiv = document.getElementById("dropdownActionMenu" + data.transactions[i].id);
@@ -1305,9 +1305,24 @@
     }
 
     async function closeSwingBB(transId) {
+        const dataTrans = await httpGetNoLoading(theUrl = "/bots/emirhan-bb-stoch/transactions/get?id=" + transId);
         var urlRoute = 'api.breakout.services.swing.closeAll'
-        const data = await botsHttpActions(urlRoute, "get?id=" + transId);
-        toastr.success(transId + ' Transaction was successfully closed. Profit: ' + data.totalProfit + 'Last Step: ' + data.step, 'Success');
+        console.log(dataTrans)
+        var magic_number = dataTrans.transactions[0].positions[0].magic_number
+        var type = "buy"
+        if (dataTrans.transactions[0].positions[0].type = 1) {
+            magic_number = magic_number - 1;
+            type = "sell"
+        }
+
+        const data = await botsHttpActions(urlRoute, "/bots/emirhan-bb-stoch/transactions/close?account_id=" + dataTrans.transactions[0].account_id + "&pair_id=" + dataTrans.transactions[0].positions[0].pair_id + "&magic_number=" + magic_number + "&trade=" + type);
+        if (data.error == true) {
+            toastr.error(transId + ' Close Action Error. Please try again after 2 seconds.', 'Error');
+
+        } else {
+            toastr.success(transId + ' Close Action is sent to server. Please check the closed transaction row.', 'Success');
+
+        }
     }
 
     async function botsHttpActions(urlRoute, theUrl) {

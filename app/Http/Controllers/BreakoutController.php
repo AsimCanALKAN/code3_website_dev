@@ -73,22 +73,22 @@ class BreakoutController extends Controller
     public function closeSwingBB(Request $request)
     {
 
-        //$data = $this->httpGet($request->all());
-        return response()->json(['closed' => 'true', 'totalProfit' => 12500, 'step' => 6]);
+        $data = $this->httpGet($request->all());
+        return  $data;
     }
 
     public function stopSwingBB(Request $request)
     {
 
-        //$data = $this->httpGet($request->all());
-        return response()->json(['stoped' => 'true']);
+        $data = $this->httpGet($request->all());
+        return  $data;
     }
 
     public function startSwingBB(Request $request)
     {
 
-        //$data = $this->httpGet($request->all());
-        return response()->json(['started' => 'true']);
+        $data = $this->httpGet(["theUrl" => "/auth/bots/"]);
+        return  $data;
     }
 
     private function getPlatformsStart()
