@@ -749,7 +749,7 @@
                                             <ul id="dropdownActionMenu${data.transactions[i].id}" class="${preClassValueActions}" ${style} >
                                                 <li class="dropdown-item">
                                                     <div class="col-xl-12">
-                                                        <a onClick="stopSwingBB()" class="btn btn-warning btn-rounded light"><i class="fa-solid fa-stop"></i> Stop</a>
+                                                    <!-- <a onClick="stopSwingBB()" class="btn btn-warning btn-rounded light"><i class="fa-solid fa-stop"></i> Stop</a> -->
                                                         <!-- <a onClick="startSwingBB()" class="btn btn-warning btn-rounded light"><i class="fa-solid fa-play"></i> Start</a> -->
                                                         <a onClick="closeSwingBB(${data.transactions[i].id})" class="btn btn-danger btn-rounded light ml-3"><i class="fa-solid fa-xmark"></i> Close All</a>
                                                     </div>
@@ -1308,7 +1308,7 @@
         var urlRoute = 'api.breakout.services.swing.closeAll'
         var magic_number = dataTrans.transactions[0].positions[0].magic_number
         var type = "buy"
-        if (dataTrans.transactions[0].positions[0].type = 1) {
+        if (dataTrans.transactions[0].positions[0].type == 1) {
             magic_number = magic_number - 1;
             type = "sell"
         }
