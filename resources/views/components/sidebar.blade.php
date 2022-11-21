@@ -35,33 +35,35 @@
                     </a> --}}
                 </div>
             </li>
+
             <li>
-                <a href="{{ route('dashboard') }}" class="ai-icon" aria-expanded="false">
-                    <i class="flaticon-025-dashboard"></i>
+                <a class="ai-icon" href="{{ route('dashboard') }}" aria-expanded="false">
+                    <i class="fa fa-compass"></i>
                     <span class="nav-text">Dashboard</span>
                 </a>
             </li>
+
             <li>
                 <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                    <i class="bi-signpost-2-fill"></i>
+                    <i class="fa-solid fa-circle"></i>
                     <span class="nav-text">Swing BB</span>
                 </a>
                 <ul id="swing_strategy" aria-expanded="false">
-                    <li><a href="{{ route('breakout-strategy') }}"><i class="las la-heartbeat scale5 me-3"></i> Live Trade</a></li>
-                    <li><a href="{{ route('history-analysis') }}"><i class="las la-history scale5 me-3"></i> Historical Analysis</a></li>
-                    <!-- <li><a href="{{ route('symbol-settings') }}"><i class="las la-cogs scale5 me-3"></i> Symbol Settings</a></li> -->
+                    <li><a href="{{ route('breakout-strategy') }}"><i class="fa-solid fa-heart-pulse"></i> Live Trade</a></li>
+                    <li><a href="{{ route('history-analysis') }}"><i class="fa-solid fa-clock-rotate-left"></i> Historical Analysis</a></li>
+                    <!-- <li><a href="{{ route('symbol-settings') }}"><i class="fa-solid fa-gear"></i> Symbol Settings</a></li> -->
                 </ul>
 
             </li>
             <li>
                 <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                    <i class="bi-signpost-2-fill"></i>
+                    <i class="fa-solid fa-square"></i>
                     <span class="nav-text">BreakOut Strategy</span>
                 </a>
                 <ul id="breakout_strategy" aria-expanded="false">
-                    <li><a href="{{ route('bos-breakout-strategy') }}"><i class="las la-heartbeat scale5 me-3"></i> Live Trade</a></li>
-                    <li><a href="{{ route('bos-history-analysis') }}"><i class="las la-history scale5 me-3"></i> Historical Analysis</a></li>
-                    <li><a href="{{ route('symbol-settings') }}"><i class="las la-cogs scale5 me-3"></i> Symbol Settings</a></li>
+                    <li><a href="{{ route('bos-breakout-strategy') }}"><i class="fa-solid fa-heart-pulse"></i> Live Trade</a></li>
+                    <li><a href="{{ route('bos-history-analysis') }}"><i class="fa-solid fa-clock-rotate-left"></i> Historical Analysis</a></li>
+                    <li><a href="{{ route('symbol-settings') }}"><i class="fa-solid fa-gear"></i> Symbol Settings</a></li>
                 </ul>
 
             </li>
