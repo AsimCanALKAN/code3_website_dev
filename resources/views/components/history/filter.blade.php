@@ -292,10 +292,12 @@
         var brokerSelectElement = document.getElementById(divId + "BrokersFilter");
         var accountSelectElement = document.getElementById(divId + "AccountsFilter");
         if (value == "Select..") {
-            brokerSelectElement.value = 'Select..';
-            accountSelectElement.value = 'Select..';
-            brokerSelectElement.disabled = true;
-            accountSelectElement.disabled = true;
+            if (divId == "symbol_") {
+                brokerSelectElement.value = 'Select..';
+                accountSelectElement.value = 'Select..';
+                brokerSelectElement.disabled = true;
+                accountSelectElement.disabled = true;
+            }
             var data = await httpGet(theUrl = "/auth/pairs/", selectObject = selectObject, selectLoading = pairSelectLoading);
             $('#' + divId + "SymbolsFilter").find('option')
                 .remove()
@@ -353,10 +355,13 @@
         var symbolSelectElement = document.getElementById(divId + "SymbolsFilter");
         var accountSelectElement = document.getElementById(divId + "AccountsFilter");
         if (valueBrokerId == "Select..") {
-            symbolSelectElement.value = 'Select..';
-            accountSelectElement.value = 'Select..';
-            symbolSelectElement.disabled = true;
-            accountSelectElement.disabled = true;
+            if (divId == "broker_") {
+
+                symbolSelectElement.value = 'Select..';
+                accountSelectElement.value = 'Select..';
+                symbolSelectElement.disabled = true;
+                accountSelectElement.disabled = true;
+            }
             var data = await httpGet(theUrl = "/auth/brokers/", selectObject = selectObject, selectLoading = pairSelectLoading);
             $('#' + divId + "BrokersFilter").find('option')
                 .remove()
@@ -422,10 +427,13 @@
         var symbolSelectElement = document.getElementById(divId + "SymbolsFilter");
         var brokerSelectElement = document.getElementById(divId + "BrokersFilter");
         if (value == "Select..") {
-            symbolSelectElement.value = 'Select..';
-            brokerSelectElement.value = 'Select..';
-            symbolSelectElement.disabled = true;
-            brokerSelectElement.disabled = true;
+            if (divId == "account_") {
+
+                symbolSelectElement.value = 'Select..';
+                brokerSelectElement.value = 'Select..';
+                symbolSelectElement.disabled = true;
+                brokerSelectElement.disabled = true;
+            }
             var data = await httpGet(theUrl = "/auth/accounts/", selectObject = selectObject, selectLoading = pairSelectLoading);
             $('#' + divId + "AccountsFilter").find('option')
                 .remove()
@@ -433,7 +441,7 @@
                 .append('<option selected="selected">Select..</option>')
                 .val('Select..')
             for (var i = 0; i < data.accounts.length; i++) {
-                if (userAccountList.includes(data.accounts[i].login)) {
+                if (userAccountList.includes(data.accounts[i].id)) {
                     $('#' + divId + "AccountsFilter").find('option').end().append('<option value="' + data.accounts[i].id + '_' + data.accounts[i].broker_id + '">' + data.accounts[i].login + ' (' + data.accounts[i].owner + ')</option>');
                 }
             }
