@@ -54,8 +54,8 @@
                                 button_wrapper.append(`<a href="#" class="btn btn-primary" id="pagination-button-${link.label}">${link.label}</a>`)
                             } else {
                                 if (link.active) {
-                                    button_wrapper.append(`<a href="{{ route('history-analysis') }}?${link.url.split('?')[1]}" class="btn btn-primary active" id="pagination-button-${link.label}">${link.label}</a>`)
-                                } else button_wrapper.append(`<a href="{{ route('history-analysis') }}?${link.url.split('?')[1]}" class="btn btn-primary" id="pagination-button-${link.label}">${link.label}</a>`)
+                                    button_wrapper.append(`<a href="{{ route('swing-bb-history-analysis') }}?${link.url.split('?')[1]}" class="btn btn-primary active" id="pagination-button-${link.label}">${link.label}</a>`)
+                                } else button_wrapper.append(`<a href="{{ route('swing-bb-history-analysis') }}?${link.url.split('?')[1]}" class="btn btn-primary" id="pagination-button-${link.label}">${link.label}</a>`)
                             }
                         }
                     }

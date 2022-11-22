@@ -36,9 +36,9 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
 
     Route::get('/', [DashboardController::class, 'render'])->name('dashboard');
 
-    Route::get('/breakout-strategy', [BreakoutController::class, 'render'])->name('breakout-strategy');
+    Route::get('/swing-bb-live', [BreakoutController::class, 'render'])->name('swing-bb-live');
 
-    Route::get('/history-analysis', [HistoryAnalysisController::class, 'render'])->name('history-analysis');
+    Route::get('/swing-bb-history-analysis', [HistoryAnalysisController::class, 'render'])->name('swing-bb-history-analysis');
 
     Route::get('/bos-breakout-strategy', [BreakoutController::class, 'render'])->name('bos-breakout-strategy');
 

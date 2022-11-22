@@ -49,8 +49,8 @@
                     <span class="nav-text">Swing BB</span>
                 </a>
                 <ul id="swing_strategy" aria-expanded="false">
-                    <li><a href="{{ route('breakout-strategy') }}"><i class="fa-solid fa-heart-pulse"></i> Live Trade</a></li>
-                    <li><a href="{{ route('history-analysis') }}"><i class="fa-solid fa-clock-rotate-left"></i> Historical Analysis</a></li>
+                    <li><a href="{{ route('swing-bb-live') }}"><i class="fa-solid fa-heart-pulse"></i> Live Trade</a></li>
+                    <li><a href="{{ route('swing-bb-history-analysis') }}"><i class="fa-solid fa-clock-rotate-left"></i> Historical Analysis</a></li>
                     <!-- <li><a href="{{ route('symbol-settings') }}"><i class="fa-solid fa-gear"></i> Symbol Settings</a></li> -->
                 </ul>
 

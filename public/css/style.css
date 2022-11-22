@@ -26156,7 +26156,7 @@ table.dataTable tbody tr, table.dataTable tbody td {
 table.dataTable thead th {
   color: #000;
   white-space: nowrap;
-  font-size: 18px;
+  font-size: 14px;
   text-transform: capitalize;
   font-weight: 600;
   padding: 20px 15px; }
@@ -26164,11 +26164,11 @@ table.dataTable thead th {
     color: #fff; }
   @media only screen and (max-width: 1400px) {
     table.dataTable thead th {
-      font-size: 16px; } }
+      font-size: 14px; } }
 
 table.dataTable tbody td {
   padding: 20px 15px;
-  font-size: 16px;
+  font-size: 14;
   font-weight: 600;
   border-bottom: 0; }
   @media only screen and (max-width: 575px) {

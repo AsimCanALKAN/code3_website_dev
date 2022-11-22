@@ -679,7 +679,7 @@
 
             if (transactionRowId) {
                 if (data.status == "close") {
-                    toastr.success(data.transactions[i].id + ' Transaction is closed. Profit: ' +data.transactions[i].profit , 'Success')
+                    toastr.success(data.transactions[i].id + ' Transaction is closed. Profit: ' + data.transactions[i].profit, 'Success')
                     transactionRowId.remove();
                 } else {
                     var actionCollapsableDiv = document.getElementById("dropdownActionMenu" + data.transactions[i].id);
@@ -732,7 +732,7 @@
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">${data.pair_id}</span></td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ ${data.transactions[i].weighted_price}</span></td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ ${data.transactions[i].target_profit_price}</span></td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;">Step: ${data.transactions[i].step} - ${data.transactions[i].type}</td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;">${await stepTypeHTML(data.transactions[i].type, data.transactions[i].step)}</td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;">
                                         ${await profitSumHTML(data.transactions[i].profit)}
 
@@ -847,6 +847,7 @@
                 }
 
             } else {
+                websocket.close()
                 // modal href add <a data-bs-toggle="modal" data-bs-target="#modalStrategyTradeSettings${data.transactions[i].id}" class="dropdown-item"><i class="las la-cog scale5 me-3"></i>Strategy Settings</a>
                 transactionTable.append(` 
             <tr id="transactionRow${data.transactions[i].id}">
@@ -884,7 +885,7 @@
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">${data.pair_id}</span></td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ ${data.transactions[i].weighted_price}</span></td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ ${data.transactions[i].target_profit_price}</span></td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;">Step: ${data.transactions[i].step} - ${data.transactions[i].type}</td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"> ${await stepTypeHTML(data.transactions[i].type, data.transactions[i].step)} </td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;">
                                         ${await profitHTML(data.transactions[i].profit)}
 
@@ -992,7 +993,9 @@
                                         </td>
                                     </tr>
                                     `);
-
+                if (i == data.transactions.length - 1) {
+                    testWebSocket('{"accounts": [' + userAccountList + ']}')
+                }
             }
         };
 
@@ -1131,6 +1134,19 @@
                                                 <br>
                                                 $ ${profit}
                                                 </div>`
+
+        }
+    }
+
+    async function stepTypeHTML(type, step) {
+        // var profit = 0;
+        // for (var i = 0; i < data.length; i++) {
+        //     profit = profit + data[i].profit + data[i].commission + data[i].swap;
+        // }
+        if (type == "SELL") {
+            return `<span>${step}  <span style="color:red">${type}</span></span>`
+        } else {
+            return `<span>${step}  <span style="color:green">${type}</span></span>`
 
         }
     }
