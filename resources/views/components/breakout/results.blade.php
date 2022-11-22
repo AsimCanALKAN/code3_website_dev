@@ -11,9 +11,7 @@
                             <th>Account ID</th>
                             <th>Status </th>
                             <th>Symbol</th>
-                            <th>Magic No</th>
                             <th>Average Price</th>
-                            <th>Current Price</th>
                             <th>TP Price</th>
                             <th>Step</th>
                             <th>Profit</th>
