@@ -639,7 +639,7 @@
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>${data.transactions[i].account_id}</span></td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>${data.transactions[i].account_id}</span></td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">${data.transactions[i].account_id}</span></td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;">${await positionTypeTransaction(data.transactions[i].positions[data.transactions[i].positions.length -1].type)}</td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;">${await positionTypeTransaction(data.transactions[i].positions)}</td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;">
                                     ${await profitHTML(data.transactions[i].total_profit)}
                                     </td>
@@ -704,14 +704,25 @@
     }
 
 
-    async function positionTypeTransaction(type) {
-        if (type == 0) {
-            return `<span class="text-nowrap" style="color:green">3 - Buy</span>`
+    async function positionTypeTransaction(data) {
+        var step = await getMaxStep(data);
+        if (data[data.length -1].type == 0) {
+            return `<span class="text-nowrap" style="color:green">${step} - Buy</span>`
         } else if (type == 1) {
-            return `<span class="text-nowrap" style="color:red">3 - Sell</span>`
+            return `<span class="text-nowrap" style="color:red">${step} - Sell</span>`
 
 
         }
+    }
+
+    async function getMaxStep(data) {
+        var step = 0;
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].step > step) {
+                step = data[i].step;
+            }
+        }
+        return step;
     }
 
     async function positionTypeHistory(type) {
