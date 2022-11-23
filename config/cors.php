@@ -17,7 +17,7 @@ return [
 
     'paths' => ['api/*', 'sanctum/csrf-cookie', "*"],
     'allowed_methods' => ['*'],
-    'allowed_origins' => ["http://157.90.31.191:30000", '*'],
+    'allowed_origins' => ["https://api.yalcinex.com:30000", '*'],
     'allowed_origins_patterns' => [],
     'allowed_headers' => ['*'],
     'exposed_headers' => [],

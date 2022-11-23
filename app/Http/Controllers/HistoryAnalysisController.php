@@ -98,7 +98,7 @@ class HistoryAnalysisController extends Controller
 
     private function httpGet($theUrl)
     {
-        $baseUrl = 'http://157.90.31.191:30000/v1' . $theUrl['theUrl'];
+        $baseUrl = 'https://api.yalcinex.com:30000/v1' . $theUrl['theUrl'];
         $client = new \GuzzleHttp\Client();
         foreach ($theUrl as $k => $urlPar) {
             if ($urlPar[0] != "/") {
