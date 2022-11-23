@@ -242,6 +242,7 @@
     var user = '<?php print($data->userHasAccount); ?>';
     var userAccountList = [];
     var userBrokerList = [];
+    var firstLoading = true;
 
     for (var i = 0; i < JSON.parse(user).length; i++) {
         userAccountList.push(JSON.parse(user)[i].account_id.toString())
@@ -660,7 +661,6 @@
         return `<div class="${modalValueActions}" id="modalStrategyTradeSettings${transactionId}" ${modalValuestyle}>${modalStrategyTradeSettings}</div><div class="${secondModalValueActions}" id="modalInputs${transactionId}" ${secondModalValuestyle}>${modalInputsTradeSettings}</div>`
     }
 
-
     async function showTableData(data) {
         const transactionTable = $(`#liveTransactions`);
         if (data.transactions.length === 0) {
@@ -847,7 +847,9 @@
                 }
 
             } else {
-                websocket.close()
+                if (firstLoading) {
+                    websocket.close()
+                }
                 // modal href add <a data-bs-toggle="modal" data-bs-target="#modalStrategyTradeSettings${data.transactions[i].id}" class="dropdown-item"><i class="las la-cog scale5 me-3"></i>Strategy Settings</a>
                 transactionTable.append(` 
             <tr id="transactionRow${data.transactions[i].id}">
@@ -993,7 +995,8 @@
                                         </td>
                                     </tr>
                                     `);
-                if (i == data.transactions.length - 1) {
+                if (firstLoading && i == data.transactions.length - 1) {
+                    firstLoading = false;
                     testWebSocket('{"accounts": [' + userAccountList + ']}')
                 }
             }
@@ -1151,7 +1154,6 @@
         }
     }
 
-
     async function strategyModalSettings(transactionId, strategyId, modalValueActions = "modal fade", modalValuestyle = "style='display: none;' aria-hidden='true'") {
         var datas = await httpGetNoLoading(theUrl = "/bots/emirhan-bb-stoch/strategies/get?id=" + strategyId);
 
@@ -1302,6 +1304,7 @@
         }
         return step;
     }
+
     async function startSwingBB() {
         var urlRoute = 'api.breakout.services.swing.start'
         const data = await botsHttpActions(urlRoute, "get?id=1");
