@@ -301,6 +301,11 @@
 
     window.addEventListener("load", init, false);
 
+    window.addEventListener('online', (event) => {
+        websocket.close();
+        testWebSocket('{"accounts": [' + userAccountList + ']}');
+    });
+
     async function getPairsFilter(selectObject, loadingDivId, divId) {
         var value = selectObject.value;
         const myArray = value.split("_");
