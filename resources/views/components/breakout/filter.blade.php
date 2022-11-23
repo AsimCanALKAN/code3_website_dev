@@ -290,8 +290,9 @@
     }
 
     function onError(evt) {
+        console.log("Error Websocket")
         websocket.close();
-        testWebSocket();
+        testWebSocket('{"accounts": [' + userAccountList + ']}')
     }
 
     function sendMessage(message) {
