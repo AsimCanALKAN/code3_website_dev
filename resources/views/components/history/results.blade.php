@@ -5,13 +5,12 @@
                 <table class="table card-table display mb-4 dataTablesCard text-black" id="example6">
                     <thead>
                         <tr>
-                            <th>Transaction ID</th>
-                            <th>Strategy ID</th>
-                            <th>Closed Time</th>
+                            <th>TransID</th>
+                            <th>StrategyID</th>
+                            <th>ClosedTime</th>
                             <th>Broker</th>
-                            <th>Account ID</th>
+                            <th>Account</th>
                             <th>Symbol</th>
-                            <th>Magic No</th>
                             <th>Step</th>
                             <th>Profit</th>
                             <th>Status </th>
