@@ -105,7 +105,7 @@ class HistoryAnalysisController extends Controller
                 $baseUrl = $baseUrl .  '&' . $k . "=" . $urlPar;
             }
         }
-        $res = $client->get($baseUrl);
+        $res = $client->get($baseUrl, ['verify' => false]);
         //echo $res->getStatusCode(); // 200
         //echo $res->getBody(); // { "type": "User", ....
         //Cache::put($cachekey, $res->getBody(), 5);
