@@ -708,7 +708,7 @@
         var step = await getMaxStep(data);
         if (data[data.length -1].type == 0) {
             return `<span class="text-nowrap" style="color:green">${step} - Buy</span>`
-        } else if (type == 1) {
+        } else if (data[data.length -1].type == 1) {
             return `<span class="text-nowrap" style="color:red">${step} - Sell</span>`
 
 
