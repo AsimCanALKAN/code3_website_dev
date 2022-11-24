@@ -723,7 +723,7 @@
                                             <div id="threeDotTarget${data.transactions[i].id}"  class="${threeDotValueActions}" ${threeDotstyle}>
 
 
-                                                <a data-bs-toggle="modal" data-bs-target="#modalInputs${data.transactions[i].id}" class="dropdown-item"><i class="las la-sliders-h scale5 me-3"></i>See Strategy Inputs</a>
+                                                <a data-bs-toggle="modal" data-bs-target="#modalInputs${data.transactions[i].id}" class="dropdown-item"><i class="fa-solid fa-gear"></i>See Strategy Inputs</a>
 
                                             </div>
                                             ${await addModalFromOld(data.transactions[i].id)}
@@ -871,7 +871,7 @@
                                             <div id="threeDotTarget${data.transactions[i].id}" class="dropdown-menu">
 
 
-                                                <a data-bs-toggle="modal" data-bs-target="#modalInputs${data.transactions[i].id}" class="dropdown-item"><i class="las la-sliders-h scale5 me-3"></i>See Strategy Inputs</a>
+                                                <a data-bs-toggle="modal" data-bs-target="#modalInputs${data.transactions[i].id}" class="dropdown-item"><i class="fa-solid fa-gear"></i>See Strategy Inputs</a>
 
                                             </div>
                                             <!-- Modal -->
