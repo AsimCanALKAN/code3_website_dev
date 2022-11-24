@@ -260,7 +260,7 @@
 
     function testWebSocket(endpointPath) {
         //websocket = new WebSocket(wsUri+endpointPath);
-        console.log(wsUri + endpointPath);
+        console.log("ws started");
         websocket = new WebSocket(wsUri);
         websocket.onopen = function(evt) {
             onOpen(evt)
@@ -730,12 +730,12 @@
                                     </td>
                                     <!-- Button trigger modal -->
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>#${data.transactions[i].id}</span></td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>${data.account_id}</span></td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>${data.account_id}</span></td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>${data.broker_name}</span></td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>${data.account_owner} - ${data.account_login}</span></td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="badge light badge-success">In Transaction</span></td>
                                     <!--<td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="badge light badge-warning">Pending</span></td>-->
                                     <!--<td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="badge light badge-info">Boarding</span></td>-->
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">${data.pair_id}</span></td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">${data.pair_symbol}</span></td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ ${data.transactions[i].weighted_price}</span></td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ ${data.transactions[i].target_profit_price}</span></td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;">${await stepTypeHTML(data.transactions[i].type, data.transactions[i].step)}</td>
@@ -885,12 +885,12 @@
                                     </td>
                                     <!-- Button trigger modal -->
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>#${data.transactions[i].id}</span></td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>${data.account_id}</span></td>
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>${data.account_id}</span></td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>${data.broker_name}</span></td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span>${data.account_owner} - ${data.account_login}</span></td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="badge light badge-success">In Transaction</span></td>
                                     <!--<td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="badge light badge-warning">Pending</span></td>-->
                                     <!--<td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="badge light badge-info">Boarding</span></td>-->
-                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">${data.pair_id}</span></td>
+                                    <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">${data.pair_symbol}</span></td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ ${data.transactions[i].weighted_price}</span></td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"><span class="text-nowrap">$ ${data.transactions[i].target_profit_price}</span></td>
                                     <td data-bs-toggle="collapse" data-bs-target="#default_collapse${data.transactions[i].id}" class="accordion-header collapsed" style="border-color: transparent;"> ${await stepTypeHTML(data.transactions[i].type, data.transactions[i].step)} </td>
