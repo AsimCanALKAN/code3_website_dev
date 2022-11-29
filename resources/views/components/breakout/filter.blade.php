@@ -669,6 +669,11 @@
 
     async function showTableData(data) {
         const transactionTable = $(`#liveTransactions`);
+
+        if(data.transactions == undefined){
+            return;
+        }
+        
         if (data.transactions.length === 0) {
             transactionTable.html(`<tr class="odd">
                                     <td valign="top" colspan="10" class="dataTables_empty">Please select some filter if there is no filter selection it means no data available in table</td>
