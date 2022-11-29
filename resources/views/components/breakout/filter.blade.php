@@ -237,7 +237,7 @@
 
 
 <script>
-    var wsUri = "ws://157.90.31.191:30200/v1/bots/monitoring/emirhan-bb-stoch/";
+    var wsUri = "wss://api.yalcinex.com:30200/v1/bots/monitoring/emirhan-bb-stoch/";
     var log;
     var user = '<?php print($data->userHasAccount); ?>';
     var userAccountList = [];
